@@ -77,23 +77,66 @@ function closeCart() {
     }
 }
 
-async function loadCartDrawer() {
-    try {
-        const response = await fetch('carrito.html');
-        const html = await response.text();
-        const holder = document.getElementById('cart-drawer-holder');
-        if (holder) {
-            holder.innerHTML = html;
-            renderCart();
-            // Re-init lucide icons for the injected drawer
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-            
-            // Re-bind listeners for the NEWLY injected drawer
-            document.getElementById('close-cart')?.addEventListener('click', closeCart);
-            document.getElementById('checkout-btn')?.addEventListener('click', initWompiCheckout);
-        }
-    } catch (err) {
-        console.error('Error loading cart:', err);
+function loadCartDrawer() {
+    const holder = document.getElementById('cart-drawer-holder');
+    if (!holder) return;
+
+    holder.innerHTML = `
+        <div id="cart-drawer" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-[#F5F2ED] z-[1100] transform translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.85,0,0.15,1)] shadow-2xl flex flex-col">
+            <div class="p-8 border-b border-[#1A1412]/5 flex justify-between items-center bg-[#1A1412]/5">
+                <div class="flex items-center gap-4">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 text-[#8C4A23]"></i>
+                    <h2 class="uppercase tracking-[0.3em] text-xs font-bold" data-i18n="nav-menu">Tu Mochila</h2>
+                </div>
+                <button id="close-cart" class="p-2 hover:bg-[#1A1412]/5 rounded-full transition-colors cursor-trigger">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto px-8 py-4 hide-scrollbar">
+                <div id="cart-empty" class="h-full flex flex-col items-center justify-center text-center space-y-8 py-20 hidden">
+                    <div class="w-24 h-24 bg-[#1A1412]/5 rounded-full flex items-center justify-center text-[#1A1412]/10">
+                        <i data-lucide="coffee" class="w-12 h-12"></i>
+                    </div>
+                    <div>
+                        <p class="text-xl font-serif italic mb-4" data-i18n="cart-empty">Tu mochila está vacía</p>
+                        <a href="coleccion.html" class="uppercase tracking-widest text-[10px] font-bold text-[#8C4A23] border-b border-[#8C4A23] pb-1 cursor-trigger">Ir a la tienda</a>
+                    </div>
+                </div>
+                <div id="cart-full">
+                    <div id="cart-items-container" class="space-y-2 mb-12"></div>
+                    <div class="pt-12 border-t border-[#1A1412]/10 space-y-8">
+                        <span class="uppercase tracking-widest text-[10px] font-bold text-[#8C4A23] block" data-i18n="cart-shipping-title">Datos de Envío</span>
+                        <div class="grid grid-cols-1 gap-6">
+                            <div class="space-y-2"><label class="text-[10px] uppercase tracking-widest opacity-40 font-bold" data-i18n="cart-name">Nombre Completo</label><input type="text" id="ship-name" class="w-full bg-[#1A1412]/5 border-b border-[#1A1412]/10 py-3 px-4 outline-none focus:border-[#8C4A23] transition-colors font-light text-sm"></div>
+                            <div class="space-y-2"><label class="text-[10px] uppercase tracking-widest opacity-40 font-bold" data-i18n="cart-address">Dirección de Entrega</label><input type="text" id="ship-address" class="w-full bg-[#1A1412]/5 border-b border-[#1A1412]/10 py-3 px-4 outline-none focus:border-[#8C4A23] transition-colors font-light text-sm"></div>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="space-y-2"><label class="text-[10px] uppercase tracking-widest opacity-40 font-bold" data-i18n="cart-city">Ciudad</label><input type="text" id="ship-city" value="Medellín" class="w-full bg-[#1A1412]/5 border-b border-[#1A1412]/10 py-3 px-4 outline-none focus:border-[#8C4A23] transition-colors font-light text-sm"></div>
+                                <div class="space-y-2"><label class="text-[10px] uppercase tracking-widest opacity-40 font-bold" data-i18n="cart-phone">Celular</label><input type="tel" id="ship-phone" class="w-full bg-[#1A1412]/5 border-b border-[#1A1412]/10 py-3 px-4 outline-none focus:border-[#8C4A23] transition-colors font-light text-sm"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="cart-footer" class="p-8 bg-[#F5F2ED] border-t border-[#1A1412]/5 space-y-6">
+                <div class="flex justify-between items-end"><span class="uppercase tracking-widest text-[10px] font-bold opacity-40" data-i18n="cart-total-label">Total Estimado</span><span id="cart-total" class="text-3xl font-serif italic">$0</span></div>
+                <button id="checkout-btn" class="w-full py-6 bg-[#1A1412] text-[#F5F2ED] uppercase tracking-widest font-bold text-xs hover:bg-[#8C4A23] transition-all duration-500 shadow-xl flex items-center justify-center gap-4 cursor-trigger group">
+                    <span data-i18n="cart-pay">Finalizar y Pagar</span> <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-2 transition-transform"></i>
+                </button>
+                <p class="text-[9px] text-center opacity-30 uppercase tracking-widest leading-loose" data-i18n="cart-footer-note">Pagos seguros procesados por <span class="font-bold">Wompi</span>. Tiempos de entrega: 1-3 días hábiles.</p>
+            </div>
+        </div>
+    `;
+
+    renderCart();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    document.getElementById('close-cart')?.addEventListener('click', closeCart);
+    document.getElementById('checkout-btn')?.addEventListener('click', initWompiCheckout);
+
+    // Cargar script de Wompi si no existe
+    if (!document.querySelector('script[src*="wompi"]')) {
+        const script = document.createElement('script');
+        script.src = "https://checkout.wompi.co/widget.js";
+        document.head.appendChild(script);
     }
 }
 
