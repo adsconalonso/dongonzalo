@@ -105,20 +105,22 @@ body.no-scroll {
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 
-/* 6. Parallax Container */
+/* 6. Parallax & Smooth Transitions (GPU Optimized) */
 .parallax-wrapper {
     overflow: hidden;
     position: relative;
     width: 100%;
+    will-change: transform;
 }
 
 .parallax-img {
     width: 100%;
-    height: 130%;
+    height: 140%; /* Increased for better mobile range */
     object-fit: cover;
     position: absolute;
-    top: -15%;
+    top: -20%;
     left: 0;
+    will-change: transform;
 }
 
 /* 7. Fullscreen Menu Previews */
@@ -169,6 +171,30 @@ body.no-scroll {
     justify-content: center;
     text-align: center;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+/* 9. Navbar Scrolled State (Reliable Visibility) */
+#navbar.navbar-scrolled #nav-content {
+    color: var(--theme-text) !important;
+}
+
+#navbar.navbar-scrolled {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(26, 20, 18, 0.05);
+}
+
+@media (max-width: 768px) {
+    #navbar {
+        mix-blend-mode: normal !important; /* Avoid difference on small screens if problematic */
+        background-color: transparent;
+        transition: background-color 0.4s ease, padding 0.4s ease;
+    }
+    
+    #navbar:not(.navbar-scrolled) #nav-content {
+        color: white; /* Force white on hero video if mix-blend is off */
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
 }
 
 /* 9. Utility Classes */
@@ -222,4 +248,17 @@ body.no-scroll {
 
 .animate-scroll-line {
     animation: scroll-down 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* 12. Responsive Layering & Overflow */
+#navbar { z-index: 100 !important; }
+#menu-overlay { z-index: 200 !important; }
+#cart-drawer { z-index: 200 !important; }
+#cart-backdrop { z-index: 150 !important; }
+
+@media (max-width: 768px) {
+    .section-title-giant {
+        font-size: 14vw;
+        line-height: 1;
+    }
 }

@@ -53,20 +53,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Parallax Scroll & Navbar Dynamics
-    const navbar = document.getElementById('navbar');
-    const heroMedia = document.getElementById('hero-media');
-    const heroMask = document.getElementById('hero-mask');
-    const parallaxImages = document.querySelectorAll('.js-parallax');
+    // 4. Parallax Scroll & Navbar Dynamics (Optimized for 120Hz/Mobile)
+    let lastScrollY = window.scrollY;
+    let ticking = false;
 
-    window.addEventListener('scroll', () => {
+    function updateElements() {
         const scrollY = window.scrollY;
 
         // Hero Mask Scale Effect (Specific for home/main pages)
         if (heroMask && scrollY < window.innerHeight * 1.5) {
             const scale = 1 + (scrollY / 100);
-            heroMask.style.transform = `scale(${scale})`;
-            if (heroMedia) heroMedia.style.transform = `scale(${1 + scrollY * 0.0005})`;
+            heroMask.style.transform = `translate3d(0,0,0) scale(${scale})`;
+            if (heroMedia) heroMedia.style.transform = `translate3d(0,0,0) scale(${1 + scrollY * 0.0005})`;
         }
 
         // Global Parallax for images
@@ -76,22 +74,31 @@ document.addEventListener('DOMContentLoaded', () => {
             const rect = parent.getBoundingClientRect();
             if (rect.top < window.innerHeight && rect.bottom > 0) {
                 const yPos = (rect.top - window.innerHeight / 2) * speed;
-                img.style.transform = `translateY(${yPos}px)`;
+                img.style.transform = `translate3d(0, ${yPos}px, 0)`;
             }
         });
 
-        // Navbar Background Logic
+        // Navbar Background Logic (Optimized Class Toggling)
         if (navbar) {
-            if (scrollY > 100) {
-                navbar.classList.remove('py-8');
-                navbar.classList.add('py-4', 'bg-theme-bg/80', 'backdrop-blur-md', 'text-theme-text');
-                navbar.classList.remove('mix-blend-difference');
-            } else {
-                navbar.classList.add('py-8', 'mix-blend-difference');
-                navbar.classList.remove('py-4', 'bg-theme-bg/80', 'backdrop-blur-md', 'text-theme-text');
+            const isScrolled = scrollY > 100;
+            if (isScrolled && !navbar.classList.contains('navbar-scrolled')) {
+                navbar.classList.add('navbar-scrolled', 'py-4', 'bg-theme-bg/90', 'backdrop-blur-xl', 'text-theme-text', 'shadow-sm');
+                navbar.classList.remove('py-8', 'mix-blend-difference', 'text-white');
+            } else if (!isScrolled && navbar.classList.contains('navbar-scrolled')) {
+                navbar.classList.remove('navbar-scrolled', 'py-4', 'bg-theme-bg/90', 'backdrop-blur-xl', 'text-theme-text', 'shadow-sm');
+                navbar.classList.add('py-8', 'mix-blend-difference', 'text-white');
             }
         }
-    });
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(updateElements);
+            ticking = true;
+        }
+    }, { passive: true });
 
     // 5. Reveal Observer (Entry animations)
     const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
