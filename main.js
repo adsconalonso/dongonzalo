@@ -2,11 +2,235 @@
    DON GONZALO - GLOBAL LOGIC (LUXE INTERACTION)
    ========================================================================== */
 
+// ==========================================
+// 6. E-COMMERCE ENGINE & WOMPI
+// ==========================================
+
+let cart = JSON.parse(localStorage.getItem('dg_cart')) || [];
+const WOMPI_PUBLIC_KEY = 'pub_prod_SBFnKY3HA8hAMK78beivLZWtdmcKGAEt';
+
+function saveCart() {
+    localStorage.setItem('dg_cart', JSON.stringify(cart));
+    updateCartBadge();
+}
+
+function addToCart(product) {
+    const existingItem = cart.find(item => item.id === product.id);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+    saveCart();
+    renderCart();
+    openCart();
+    
+    // Feedback visual
+    showToast(translations[currentLang]['prod-added'] || 'Agregado a la mochila');
+}
+
+function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    saveCart();
+    renderCart();
+}
+
+function updateQuantity(id, delta) {
+    const item = cart.find(item => item.id === id);
+    if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+            removeFromCart(id);
+        } else {
+            saveCart();
+            renderCart();
+        }
+    }
+}
+
+function getCartTotal() {
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+}
+
+function updateCartBadge() {
+    const badge = document.getElementById('cart-count');
+    if (badge) {
+        const count = cart.reduce((total, item) => total + item.quantity, 0);
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'flex' : 'none';
+    }
+}
+
+function openCart() {
+    const cartDrawer = document.getElementById('cart-drawer');
+    if (cartDrawer) {
+        cartDrawer.classList.remove('translate-x-full');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeCart() {
+    const cartDrawer = document.getElementById('cart-drawer');
+    if (cartDrawer) {
+        cartDrawer.classList.add('translate-x-full');
+        document.body.style.overflow = '';
+    }
+}
+
+async function loadCartDrawer() {
+    try {
+        const response = await fetch('carrito.html');
+        const html = await response.text();
+        const holder = document.getElementById('cart-drawer-holder');
+        if (holder) {
+            holder.innerHTML = html;
+            renderCart();
+            // Re-init lucide icons for the injected drawer
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            
+            // Re-bind listeners for the NEWLY injected drawer
+            document.getElementById('close-cart')?.addEventListener('click', closeCart);
+            document.getElementById('checkout-btn')?.addEventListener('click', initWompiCheckout);
+        }
+    } catch (err) {
+        console.error('Error loading cart:', err);
+    }
+}
+
+function renderCart() {
+    const container = document.getElementById('cart-items-container');
+    const emptyState = document.getElementById('cart-empty');
+    const fullState = document.getElementById('cart-full');
+    const totalElement = document.getElementById('cart-total');
+
+    if (!container) return;
+
+    if (cart.length === 0) {
+        emptyState?.classList.remove('hidden');
+        fullState?.classList.add('hidden');
+    } else {
+        emptyState?.classList.add('hidden');
+        fullState?.classList.remove('hidden');
+        
+        container.innerHTML = cart.map(item => `
+            <div class="flex gap-6 items-center py-6 border-b border-theme-text/5 group">
+                <div class="w-20 h-24 bg-theme-surface overflow-hidden shadow-md">
+                    <img src="${item.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-serif italic text-lg leading-tight">${item.name}</h4>
+                    <div class="flex justify-between items-center mt-4">
+                        <div class="flex items-center gap-4 border border-theme-text/10 px-3 py-1">
+                            <button onclick="updateQuantity('${item.id}', -1)" class="text-xs hover:text-theme-accent transition-colors">-</button>
+                            <span class="text-xs font-bold w-4 text-center">${item.quantity}</span>
+                            <button onclick="updateQuantity('${item.id}', 1)" class="text-xs hover:text-theme-accent transition-colors">+</button>
+                        </div>
+                        <span class="font-bold text-sm">$${(item.price * item.quantity).toLocaleString()}</span>
+                    </div>
+                </div>
+                <button onclick="removeFromCart('${item.id}')" class="opacity-0 group-hover:opacity-40 hover:!opacity-100 transition-opacity">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+        `).join('');
+        
+        if (totalElement) {
+            totalElement.textContent = `$${getCartTotal().toLocaleString()}`;
+        }
+        
+        // Re-init lucide icons for dynamic content
+        lucide.createIcons();
+    }
+    updateCartBadge();
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'fixed bottom-10 left-1/2 -translate-x-1/2 bg-theme-text text-theme-bg px-8 py-4 rounded-full text-xs font-bold uppercase tracking-[0.2em] z-[1000] shadow-2xl reveal';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+// 7. WOMPI CHECKOUT TRIGGER
+function initWompiCheckout() {
+    if (cart.length === 0) return;
+
+    const total = getCartTotal();
+    const reference = `DG-${Date.now()}`;
+    
+    // Aquí podrías guardar los datos del formulario de envío antes de abrir Wompi
+    const shippingData = {
+        name: document.getElementById('ship-name')?.value,
+        address: document.getElementById('ship-address')?.value,
+        phone: document.getElementById('ship-phone')?.value,
+        city: document.getElementById('ship-city')?.value
+    };
+
+    if (!shippingData.name || !shippingData.address || !shippingData.phone) {
+        alert('Por favor completa los datos de envío');
+        return;
+    }
+
+    var checkout = new WidgetCheckout({
+        currency: 'COP',
+        amountInCents: total * 100,
+        reference: reference,
+        publicKey: WOMPI_PUBLIC_KEY,
+        redirectUrl: window.location.origin + '/checkout-success.html',
+    });
+
+    checkout.open(function (result) {
+        var transaction = result.transaction;
+        if (transaction.status === 'APPROVED') {
+            // Enviar pedido a WhatsApp/Email antes de vaciar
+            sendOrderNotification(shippingData, cart, reference);
+            cart = [];
+            saveCart();
+            renderCart();
+        }
+    });
+}
+
+function sendOrderNotification(shipping, items, ref) {
+    const message = `Nuevo Pedido #${ref}\n\nCliente: ${shipping.name}\nDirección: ${shipping.address}\nCiudad: ${shipping.city}\nTel: ${shipping.phone}\n\nDetalle:\n${items.map(i => `- ${i.name} x${i.quantity}`).join('\n')}\n\nTotal: $${getCartTotal().toLocaleString()}`;
+    
+    // WhatsApp redirect
+    const waUrl = `https://wa.me/573000000000?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, '_blank');
+}
+
+// ==========================================
+// 8. EVENT LISTENERS & INIT
+// ==========================================
+
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Initialise Lucide Icons
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
+
+    // Escuchar botones de "Añadir al carrito"
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.cart-trigger');
+        if (btn) {
+            const product = {
+                id: btn.dataset.productId || 'amanecer-antioquia',
+                name: btn.dataset.productName || 'Amanecer — Antioquia',
+                price: parseInt(btn.dataset.productPrice) || 24900,
+                image: btn.dataset.productImage || 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&q=80&w=1000'
+            };
+            addToCart(product);
+        }
+    });
+
+    // Close cart triggers
+    document.getElementById('open-cart-btn')?.addEventListener('click', openCart);
+    
+    // Load the external drawer
+    loadCartDrawer();
+
+    renderCart();
 
     // 2. Custom Cursor Logic (Desktop Only)
     const cursorDot = document.getElementById('cursor-dot');

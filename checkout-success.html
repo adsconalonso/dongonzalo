@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Gracias por tu pedido! — Don Gonzalo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-[#F5F2ED] text-[#1A1412] font-sans selection:bg-[#B7824B] selection:text-white overflow-hidden">
+    
+    <div class="h-screen w-full flex items-center justify-center p-6">
+        <div class="max-w-2xl w-full text-center space-y-12">
+            <!-- Icono Animado -->
+            <div class="relative inline-block">
+                <div class="w-32 h-32 bg-[#B7824B] rounded-full flex items-center justify-center animate-bounce shadow-2xl">
+                    <i data-lucide="check" class="text-white w-16 h-16"></i>
+                </div>
+                <div class="absolute inset-0 bg-[#B7824B] rounded-full animate-ping opacity-20"></div>
+            </div>
+
+            <!-- Texto Principal -->
+            <div class="space-y-6">
+                <h1 class="text-5xl md:text-7xl font-serif italic" data-i18n="success-title">¡Pedido Confirmado!</h1>
+                <p class="text-xl font-light opacity-80 leading-relaxed max-w-lg mx-auto" data-i18n="success-message">
+                    Estamos preparando tu dosis de mística. Recibirás un correo con los detalles en breve.
+                </p>
+            </div>
+
+            <!-- Acciones -->
+            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                <a href="index.html" class="px-12 py-5 bg-[#1A1412] text-[#F5F2ED] uppercase text-xs font-bold tracking-[0.3em] hover:bg-[#B7824B] transition-all duration-500 shadow-xl">
+                    Volver al Inicio
+                </a>
+                <a href="https://wa.me/573000000000" target="_blank" class="flex items-center gap-4 text-xs font-bold uppercase tracking-widest hover:text-[#B7824B] transition-colors">
+                    <i data-lucide="message-circle" class="w-5 h-5 text-[#B7824B]"></i> Soporte por WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

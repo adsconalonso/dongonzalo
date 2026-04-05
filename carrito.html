@@ -1,182 +1,79 @@
-<!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumen de Compra — Don Gonzalo</title>
-
-    <!-- Fuentes de Google -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Configuración del tema -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        theme: {
-                            bg: '#F5F2ED',
-                            text: '#1A1412',
-                            accent: '#8C4A23',
-                            surface: '#E6E1D8'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- Iconos de Lucide -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- Estilos Globales -->
-    <link rel="stylesheet" href="base.css">
-</head>
-
-<body class="bg-theme-bg text-theme-text font-sans font-light selection:bg-theme-accent selection:text-white min-h-screen overflow-x-hidden">
-
-    <!-- Elementos de Inmersión Globales -->
-    <div class="noise-overlay"></div>
-    <div class="cursor-dot hidden md:block" id="cursor-dot"></div>
-    <div class="cursor-outline hidden md:block" id="cursor-outline"></div>
-
-    <!-- Menú Fullscreen Overlay (Global) -->
-    <div id="menu-overlay" class="fixed inset-0 z-[100] bg-theme-text text-theme-bg flex flex-col p-8 md:p-16 transition-all duration-700 ease-in-out opacity-0 pointer-events-none">
-        <div class="flex justify-between items-center w-full max-w-7xl mx-auto relative z-20">
-            <span class="font-serif text-2xl tracking-wide text-theme-accent">Don Gonzalo</span>
-            <button id="close-menu-btn" class="magnetic hover:opacity-60 transition-opacity flex items-center gap-4 uppercase text-xs tracking-widest cursor-trigger">
-                Cerrar <i data-lucide="x" class="w-8 h-8"></i>
-            </button>
+<!-- Carrito / Mochila Side Drawer -->
+<div id="cart-drawer" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-theme-bg z-[1100] transform translate-x-full transition-transform duration-700 ease-[cubic-bezier(0.85,0,0.15,1)] shadow-2xl flex flex-col">
+    <!-- Header -->
+    <div class="p-8 border-b border-theme-text/5 flex justify-between items-center bg-theme-surface/30">
+        <div class="flex items-center gap-4">
+            <i data-lucide="shopping-bag" class="w-5 h-5 text-theme-accent"></i>
+            <h2 class="uppercase tracking-[0.3em] text-xs font-bold" data-i18n="nav-menu">Tu Mochila</h2>
         </div>
-        <div class="flex flex-col justify-center h-full max-w-7xl mx-auto w-full space-y-4 md:space-y-6 relative z-10">
-            <span class="text-xs uppercase tracking-widest opacity-50 mb-8 block ml-2">Explorar la Marca</span>
-            <a href="filosofia.html" class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">La Filosofía</a>
-            <a href="proceso.html" class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">El Proceso</a>
-            <a href="coleccion.html" class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">Colección</a>
-            <a href="casa.html" class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">Nuestra Casa</a>
-        </div>
-    </nav>
+        <button id="close-cart" class="magnetic p-2 hover:bg-theme-text/5 rounded-full transition-colors cursor-trigger">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+    </div>
 
-    <!-- Navegación Fija -->
-    <nav id="navbar" class="fixed w-full z-40 transition-all duration-700 py-8 mix-blend-difference">
-        <div id="nav-content" class="max-w-[95%] mx-auto flex justify-between items-center relative z-10 text-white">
-            <div class="w-24 md:w-32">
-                <a href="coleccion.html" class="flex items-center gap-2 text-xs uppercase tracking-widest hover-line cursor-trigger magnetic">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Seguir Comprando
-                </a>
+    <!-- Contenido Dinámico -->
+    <div class="flex-1 overflow-y-auto px-8 py-4 hide-scrollbar">
+        <!-- Estado Vacío -->
+        <div id="cart-empty" class="h-full flex flex-col items-center justify-center text-center space-y-8 py-20 hidden">
+            <div class="w-24 h-24 bg-theme-surface rounded-full flex items-center justify-center text-theme-text/10">
+                <i data-lucide="coffee" class="w-12 h-12"></i>
             </div>
-            <div class="flex-shrink-0 flex justify-center items-center cursor-trigger magnetic">
-                <span class="font-serif text-2xl md:text-3xl font-bold tracking-wide">Don Gonzalo</span>
-            </div>
-            <div class="w-24 md:w-32 flex justify-end">
-                <button id="open-menu-btn" class="magnetic cursor-trigger uppercase tracking-[0.15em] text-xs font-bold hover:opacity-80 transition-opacity flex items-center gap-3">
-                    <span class="hidden md:inline hover-line">Menú</span>
-                    <i data-lucide="align-right" class="w-6 h-6"></i>
-                </button>
+            <div>
+                <p class="text-xl font-serif italic mb-4" data-i18n="cart-empty">Tu mochila está vacía</p>
+                <a href="coleccion.html" class="uppercase tracking-widest text-[10px] font-bold text-theme-accent border-b border-theme-accent pb-1 cursor-trigger">Ir a la tienda</a>
             </div>
         </div>
-    </nav>
 
-    <!-- Carrito Bold -->
-    <section class="pt-48 pb-32 px-6 bg-theme-bg overflow-hidden min-h-screen">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-24 items-start">
-            
-            <!-- Resumen de Mochila -->
-            <div class="md:col-span-12 reveal">
-                <h1 class="text-6xl md:text-[10vw] font-serif italic mb-12 border-b border-theme-text/10 pb-12">Tu Mochila.</h1>
+        <!-- Lista de Productos -->
+        <div id="cart-full" class="">
+            <div id="cart-items-container" class="space-y-2 mb-12">
+                <!-- Se llena por JS -->
             </div>
 
-            <div class="md:col-span-8 space-y-12 reveal reveal-delay-1">
-                <!-- Item del Carrito -->
-                <div class="flex items-center gap-8 border-b border-theme-text/10 pb-8 group">
-                    <div class="w-32 h-32 bg-theme-surface overflow-hidden js-tilt">
-                        <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&q=80&w=300" class="w-full h-full object-cover">
+            <!-- Formulario de Envío -->
+            <div class="pt-12 border-t border-theme-text/10 space-y-8">
+                <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent block">Datos de Envío</span>
+                <div class="grid grid-cols-1 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest opacity-40 font-bold">Nombre Completo</label>
+                        <input type="text" id="ship-name" class="w-full bg-theme-surface/50 border-b border-theme-text/10 py-3 px-4 outline-none focus:border-theme-accent transition-colors font-light text-sm">
                     </div>
-                    <div class="flex-grow">
-                        <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent">Amanecer (Geisha) — Antioquia</span>
-                        <h3 class="text-3xl font-serif mt-2 italic group-hover:text-theme-accent transition-colors">Cítrico & Miel</h3>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest opacity-40 font-bold">Dirección de Entrega</label>
+                        <input type="text" id="ship-address" class="w-full bg-theme-surface/50 border-b border-theme-text/10 py-3 px-4 outline-none focus:border-theme-accent transition-colors font-light text-sm">
                     </div>
-                    <div class="flex items-center gap-4">
-                        <button class="w-8 h-8 rounded-full border border-theme-text/20 flex items-center justify-center hover:bg-theme-text hover:text-theme-bg transition-colors cursor-trigger">-</button>
-                        <span class="text-xl font-bold font-serif italic">1</span>
-                        <button class="w-8 h-8 rounded-full border border-theme-text/20 flex items-center justify-center hover:bg-theme-text hover:text-theme-bg transition-colors cursor-trigger">+</button>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest opacity-40 font-bold">Ciudad</label>
+                            <input type="text" id="ship-city" value="Medellín" class="w-full bg-theme-surface/50 border-b border-theme-text/10 py-3 px-4 outline-none focus:border-theme-accent transition-colors font-light text-sm">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest opacity-40 font-bold">Celular</label>
+                            <input type="tel" id="ship-phone" class="w-full bg-theme-surface/50 border-b border-theme-text/10 py-3 px-4 outline-none focus:border-theme-accent transition-colors font-light text-sm">
+                        </div>
                     </div>
-                    <span class="text-xl font-bold font-serif italic ml-8">$24.900</span>
-                </div>
-            </div>
-
-            <!-- Resumen sticky -->
-            <div class="md:col-span-4 sticky top-32 reveal reveal-delay-2 space-y-12 bg-white/50 p-12 backdrop-blur-xl border border-white shadow-2xl">
-                <h3 class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-12">Información de Pago</h3>
-                <div class="space-y-6">
-                    <div class="flex justify-between text-xl font-light opacity-60">
-                        <span>Subtotal</span>
-                        <span>$24.900</span>
-                    </div>
-                    <div class="flex justify-between text-xl font-light opacity-60">
-                        <span>Envío (Nacional)</span>
-                        <span>$12.000</span>
-                    </div>
-                    <div class="flex justify-between text-3xl font-serif italic border-t border-theme-text/10 pt-6">
-                        <span>Total</span>
-                        <span>$36.900</span>
-                    </div>
-                </div>
-
-                <a href="#" class="block w-full py-6 bg-theme-text text-theme-bg text-center uppercase tracking-widest font-bold text-sm hover:bg-theme-accent transition-all duration-500 magnetic cursor-trigger shadow-2xl">
-                    Finalizar Pedido
-                </a>
-                
-                <div class="flex justify-center gap-12 opacity-30 mt-12 grayscale">
-                    <i data-lucide="credit-card" class="w-8 h-8"></i>
-                    <i data-lucide="shield-check" class="w-8 h-8"></i>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer Monumental (Global) -->
-    <footer id="contacto" class="pt-32 pb-8 px-6 bg-theme-text text-theme-bg overflow-hidden relative">
-        <div class="max-w-[95%] mx-auto relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32 reveal">
-                <div class="md:col-span-6">
-                    <h3 class="text-4xl md:text-7xl font-serif mb-8 leading-tight">¿Hablamos de <br /><span class="italic text-theme-accent">Café?</span></h3>
-                    <a href="mailto:hola@dongonzalo.com" class="text-2xl md:text-3xl font-light hover:text-theme-accent transition-colors hover-line cursor-trigger">hola@dongonzalo.com</a>
-                </div>
-                <div class="md:col-span-3">
-                    <h4 class="uppercase tracking-widest text-xs opacity-50 mb-4 font-bold text-theme-accent">Conecta</h4>
-                    <div class="flex flex-col space-y-4">
-                        <a href="#" class="text-xl font-light hover:text-theme-accent transition-colors cursor-trigger">Instagram</a>
-                        <a href="#" class="text-xl font-light hover:text-theme-accent transition-colors cursor-trigger">WhatsApp</a>
-                        <a href="#" class="text-xl font-light hover:text-theme-accent transition-colors cursor-trigger">Facebook</a>
-                    </div>
-                </div>
-                <div class="md:col-span-4 flex flex-col">
-                    <h4 class="uppercase tracking-widest text-xs opacity-50 mb-4 font-bold text-theme-accent">Únete a la Rebelión</h4>
-                    <form class="flex border-b border-white/20 pb-2 hover-line relative w-full group">
-                        <input type="email" placeholder="tu@email.com" class="bg-transparent border-none outline-none w-full text-white placeholder-white/30 font-light cursor-trigger peer" required>
-                        <button type="submit" class="absolute right-0 text-theme-accent uppercase tracking-widest text-[10px] font-bold opacity-0 peer-focus:opacity-100 group-hover:opacity-100 transition-opacity cursor-trigger">Unir</button>
-                    </form>
-                </div>
-            </div>
-            <div class="w-full text-center border-t border-white/10 pt-16 reveal pb-16">
-                <h1 class="text-[15vw] leading-none font-serif font-bold text-white opacity-[0.05] pointer-events-none">DON GONZALO</h1>
-            </div>
+    <!-- Footer Checkout -->
+    <div id="cart-footer" class="p-8 bg-theme-bg border-t border-theme-text/5 space-y-6">
+        <div class="flex justify-between items-end">
+            <span class="uppercase tracking-widest text-[10px] font-bold opacity-40">Total Estimado</span>
+            <span id="cart-total" class="text-3xl font-serif italic">$0</span>
         </div>
-    </footer>
+        
+        <button id="checkout-btn" class="w-full py-6 bg-theme-text text-theme-bg uppercase tracking-widest font-bold text-xs hover:bg-theme-accent transition-all duration-500 shadow-xl flex items-center justify-center gap-4 cursor-trigger group">
+            Finalizar y Pagar <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-2 transition-transform"></i>
+        </button>
+        
+        <p class="text-[9px] text-center opacity-30 uppercase tracking-widest leading-loose">
+            Pagos seguros procesados por <span class="font-bold">Wompi</span>.<br>
+            Tiempos de entrega: 1-3 días hábiles.
+        </p>
+    </div>
+</div>
 
-    <!-- Lógica Global -->
-    <script src="main.js"></script>
-</body>
-
-</html>
+<!-- Wompi Widget Script -->
+<script type="text/javascript" src="https://checkout.wompi.co/widget.js"></script>
