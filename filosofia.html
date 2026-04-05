@@ -103,9 +103,9 @@
                     <i data-lucide="languages" class="w-3 h-3"></i> <span id="lang-toggle-text">ES</span>
                 </button>
             </div>
-            <div class="flex-shrink-0 flex justify-center items-center cursor-trigger magnetic">
+            <a href="index.html" class="flex-shrink-0 flex justify-center items-center cursor-trigger magnetic">
                 <span class="font-serif text-2xl md:text-3xl font-bold tracking-wide">Don Gonzalo</span>
-            </div>
+            </a>
             <div class="w-24 md:w-32 flex justify-end">
                 <button id="open-menu-btn" class="magnetic cursor-trigger uppercase tracking-[0.15em] text-xs font-bold hover:opacity-80 transition-opacity flex items-center gap-3">
                     <span class="hidden md:inline hover-line" data-i18n="nav-menu">Menú</span>
@@ -152,6 +152,7 @@
             <!-- Bloque 2: Impacto -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
                 <div class="md:col-span-6 md:order-2 reveal">
+                    <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent mb-8 block" data-i18n="phi-impact-cap">Capítulo II</span>
                     <h2 class="section-title-giant mb-12" data-i18n="phi-impact-h2">Impacto <br><span class="italic font-light text-theme-text/40">en Origen.</span></h2>
                     <div class="space-y-8 text-xl font-light leading-relaxed opacity-80 text-justify">
                         <p data-i18n="phi-impact-p">Trabajamos mano a mano con caficultores independientes de Antioquia y Huila. Compramos café procesado con maestría, pagando precios que honran el sudor y la tierra.</p>
@@ -163,13 +164,61 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Bloque 3: El Arte de la Pausa -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
+                <div class="md:col-span-6 reveal">
+                    <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent mb-8 block" data-i18n="phi-chapter3">Capítulo III</span>
+                    <h2 class="section-title-giant mb-12" data-i18n="phi-pause-h2">El Arte <br><span class="italic font-light text-theme-text/40">de la Pausa.</span></h2>
+                    <div class="space-y-8 text-xl font-light leading-relaxed opacity-80 text-justify">
+                        <p data-i18n="phi-pause-p">En un mundo que corre, nosotros nos detenemos. El café de especialidad no es solo cafeína; es un recordatorio de que los mejores resultados toman tiempo, paciencia y silencio.</p>
+                    </div>
+                </div>
+                <div class="md:col-span-6">
+                    <div class="parallax-wrapper h-[80vh] reveal reveal-delay-1 shadow-2xl skew-x-[-1deg]">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax" data-speed="0.15">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bloque 4: Sostenibilidad -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
+                <div class="md:col-span-6 md:order-2 reveal">
+                    <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent mb-8 block" data-i18n="phi-chapter4">Capítulo IV</span>
+                    <h2 class="section-title-giant mb-12" data-i18n="phi-eco-h2">Sostenibilidad <br><span class="italic font-light text-theme-text/40">de Alta Montaña.</span></h2>
+                    <div class="space-y-8 text-xl font-light leading-relaxed opacity-80 text-justify">
+                        <p data-i18n="phi-eco-p">Nuestros procesos de beneficio en seco y fermentaciones controladas minimizan el uso de agua. Cuidamos los bosques generacionales tanto como cuidamos el grano.</p>
+                    </div>
+                </div>
+                <div class="md:col-span-6 md:order-1">
+                    <div class="parallax-wrapper h-[80vh] reveal reveal-delay-1 shadow-2xl skew-y-[2deg]">
+                        <img src="https://images.unsplash.com/photo-1500353391678-d7b57979d2d2?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax" data-speed="0.12">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bloque 5: El Legado -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
+                <div class="md:col-span-6 reveal">
+                    <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent mb-8 block" data-i18n="phi-chapter5">Capítulo V</span>
+                    <h2 class="section-title-giant mb-12" data-i18n="phi-legacy-h2">El Legado <br><span class="italic font-light text-theme-text/40">de Gonzalo.</span></h2>
+                    <div class="space-y-8 text-xl font-light leading-relaxed opacity-80 text-justify">
+                        <p data-i18n="phi-legacy-p">Bautizados en honor a la sabiduría del campo. Gonzalo representa a miles de arrieros y recolectores que, con manos callosas, han construido la grandeza de nuestra tierra.</p>
+                    </div>
+                </div>
+                <div class="md:col-span-6">
+                    <div class="parallax-wrapper h-[80vh] reveal reveal-delay-1 shadow-2xl skew-x-[3deg]">
+                        <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax" data-speed="0.1">
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- CTA Final: Tienda -->
     <section class="py-32 bg-theme-text text-theme-bg text-center">
         <div class="max-w-4xl mx-auto px-6 reveal">
-            <h2 class="text-4xl md:text-6xl font-serif mb-12 italic" data-i18n="phi-cta-title">¿Listo para probar la mística?</h2>
+            <h2 class="text-4xl md:text-6xl font-serif mb-12 italic" data-i18n="phi-cta-title">Vive el ritual del origen.</h2>
             <a href="coleccion.html" class="px-12 py-5 border border-theme-bg text-theme-bg uppercase text-xs font-bold tracking-[0.3em] hover:bg-theme-bg hover:text-theme-text transition-all duration-500 magnetic cursor-trigger" data-i18n="coll-btn">
                 Explorar la Tienda
             </a>

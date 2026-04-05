@@ -244,13 +244,22 @@ document.addEventListener('DOMContentLoaded', () => {
             "phi-p2": "Nuestra rebelión es contra la mediocridad y el olvido. Somos el puente entre la mística de la montaña y tu taza diaria, asegurando que la excelencia se quede en casa.",
             "phi-impact-h2": "Impacto <br><span class='italic font-light text-theme-text/40'>en Origen.</span>",
             "phi-impact-p": "Trabajamos mano a mano con caficultores independientes de Antioquia y Huila. Compramos café procesado con maestría, pagando precios que honran el sudor y la tierra.",
-            "phi-cta-title": "¿Listo para probar la mística?",
+            "phi-pause-h2": "El Arte <br><span class='italic font-light text-theme-text/40'>de la Pausa.</span>",
+            "phi-pause-p": "En un mundo que corre, nosotros nos detenemos. El café de especialidad no es solo cafeína; es un recordatorio de que los mejores resultados toman tiempo, paciencia y silencio.",
+            "phi-eco-h2": "Sostenibilidad <br><span class='italic font-light text-theme-text/40'>de Alta Montaña.</span>",
+            "phi-eco-p": "Nuestros procesos de beneficio en seco y fermentaciones controladas minimizan el uso de agua. Cuidamos los bosques generacionales tanto como cuidamos el grano.",
+            "phi-legacy-h2": "El Legado <br><span class='italic font-light text-theme-text/40'>de Gonzalo.</span>",
+            "phi-legacy-p": "Bautizados en honor a la sabiduría del campo. Gonzalo representa a miles de arrieros y recolectores que, con manos callosas, han construido la grandeza de nuestra tierra.",
+            "phi-chapter3": "Capítulo III",
+            "phi-chapter4": "Capítulo IV",
+            "phi-chapter5": "Capítulo V",
+            "phi-cta-title": "Vive el ritual del origen.",
             "proc-hero": "MÉTODO",
             "proc-hero-cap": "Capítulo II",
             "proc-hero-tag": "La ciencia detrás del sentimiento.",
             "proc-step1-title": "01",
             "proc-step1-h2": "Cosecha <br><span class='italic font-light text-theme-text/40'>Selectiva.</span>",
-            "proc-step1-p": "Recorremos los cafetales de altura, seleccionando solo los cerezos en su punto óptimo de madurez. Un trabajo de paciencia que garantiza la dulzura desde el origen.",
+            "proc-step1-p": "Recorremos los cafetales de altura, seleccionando solo las cerezas en su punto óptimo de madurez. Un trabajo de paciencia que garantiza la dulzura desde el origen.",
             "proc-step2-title": "02",
             "proc-step2-h2": "Beneficio <br><span class='italic font-light text-theme-text/40'>y Fermentación.</span>",
             "proc-step2-p": "Transformamos el fruto. Según el perfil buscado (Lavado, Natural o Honey), liberamos el alma del grano preservando sus notas frutales y florales.",
@@ -269,6 +278,10 @@ document.addEventListener('DOMContentLoaded', () => {
             "coll-hero": "COLECCIÓN",
             "coll-hero-tag": "Ediciones limitadas de origen único.",
             "coll-filter-title": "Variedad",
+            "coll-num": "03 — Catálogo",
+            "coll-title": "EDICIONES <br><span class='italic font-light text-theme-text/40'>LIMITADAS.</span>",
+            "coll-text": "Nuestras variedades provienen de microlotes seleccionados por su origen único. Solo traemos la excelencia de cada cosecha en su momento pico.",
+            "coll-btn": "Explorar la Tienda",
             "coll-prod1-tag": "Amanecer — Antioquia",
             "coll-prod1-title": "Cítrico & Miel",
             "coll-prod2-tag": "Ocaso — Huila",
@@ -324,7 +337,16 @@ document.addEventListener('DOMContentLoaded', () => {
             "phi-p2": "Our rebellion is against mediocrity and oblivion. We are the bridge between the mystique of the mountain and your daily cup, ensuring that excellence stays at home.",
             "phi-impact-h2": "Impact <br><span class='italic font-light text-theme-text/40'>at Origin.</span>",
             "phi-impact-p": "We work hand-in-hand with independent coffee farmers from Antioquia and Huila. We buy professionally processed coffee, paying prices that honor sweat and land.",
-            "phi-cta-title": "Ready to taste the mystique?",
+            "phi-pause-h2": "The Art <br><span class='italic font-light text-theme-text/40'>of the Pause.</span>",
+            "phi-pause-p": "In a world that rushes, we stop. Specialty coffee is not just caffeine; it's a reminder that the best results take time, patience, and silence.",
+            "phi-eco-h2": "High Mountain <br><span class='italic font-light text-theme-text/40'>Sustainability.</span>",
+            "phi-eco-p": "Our dry processing and controlled fermentations minimize water use. We care for generational forests as much as we care for the bean.",
+            "phi-legacy-h2": "Gonzalo's <br><span class='italic font-light text-theme-text/40'>Legacy.</span>",
+            "phi-legacy-p": "Named in honor of countryside wisdom. Gonzalo represents thousands of muleteers and harvesters who, with calloused hands, have built the greatness of our land.",
+            "phi-chapter3": "Chapter III",
+            "phi-chapter4": "Chapter IV",
+            "phi-chapter5": "Chapter V",
+            "phi-cta-title": "Live the origin ritual.",
             "proc-hero": "METHOD",
             "proc-hero-cap": "Chapter II",
             "proc-hero-tag": "The science behind the feeling.",
@@ -347,8 +369,8 @@ document.addEventListener('DOMContentLoaded', () => {
             "proc-step6-h2": "Excellence <br><span class='italic font-light text-theme-text/40'>in Cup.</span>",
             "proc-step6-p": "We test each batch to ensure sensory excellence. We seal at the source so that the mystique of the countryside reaches your home intact.",
             "coll-num": "03 — Catalog",
-            "coll-title": "LIMITED <br><span class='italic font-light text-theme-text/40'>CURATION.</span>",
-            "coll-text": "Our varieties change with the seasons. We only bring the best of each harvest at its peak moment.",
+            "coll-title": "LIMITED <br><span class='italic font-light text-theme-text/40'>EDITIONS.</span>",
+            "coll-text": "Our varieties come from selected micro-lots for their unique origin. We only bring the excellence of each harvest at its peak moment.",
             "coll-btn": "Explore the Shop",
             "house-num": "04 — Medellín",
             "house-title": "THE <br><span class='italic font-light text-white/50'>SHELTER.</span>",
@@ -422,12 +444,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial language load
     updateLanguage(currentLang);
 
-    const langBtn = document.getElementById('lang-toggle');
-    if (langBtn) {
-        langBtn.addEventListener('click', (e) => {
+    // Reliable listener for language toggle
+    document.addEventListener('click', (e) => {
+        const langBtn = e.target.closest('#lang-toggle');
+        if (langBtn) {
             e.preventDefault();
             const nextLang = currentLang === 'es' ? 'en' : 'es';
             updateLanguage(nextLang);
-        });
-    }
+        }
+    });
 });
