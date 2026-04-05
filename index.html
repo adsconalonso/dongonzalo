@@ -63,18 +63,18 @@
     <div id="cart-drawer"
         class="fixed inset-y-0 right-0 z-[110] w-full md:w-[450px] bg-theme-bg text-theme-text transform translate-x-full transition-transform duration-500 ease-in-out shadow-2xl flex flex-col">
         <div class="px-8 flex justify-between items-center py-8 border-b border-theme-text/10">
-            <span class="font-serif text-2xl tracking-wide text-theme-accent">Mochila</span>
+            <span class="font-serif text-2xl tracking-wide text-theme-accent" data-i18n="cart-title">Mochila</span>
             <button id="close-cart-btn"
                 class="magnetic hover:opacity-60 transition-opacity flex items-center gap-4 uppercase text-xs tracking-widest cursor-trigger">
-                Cerrar <i data-lucide="x" class="w-6 h-6"></i>
+                <span data-i18n="cart-close">Cerrar</span> <i data-lucide="x" class="w-6 h-6"></i>
             </button>
         </div>
         <div class="flex-grow flex flex-col justify-center items-center p-8 text-center bg-[#FDFBF7]">
             <i data-lucide="shopping-bag" class="w-16 h-16 opacity-10 mb-6 text-theme-accent"></i>
-            <p class="font-serif text-2xl mb-2 text-theme-text">Tu mochila está vacía</p>
-            <p class="font-light opacity-60 text-sm mb-8 text-theme-text">Descubre nuestra selección de origen local.</p>
+            <p class="font-serif text-2xl mb-2 text-theme-text" data-i18n="cart-empty">Tu mochila está vacía</p>
+            <p class="font-light opacity-60 text-sm mb-8 text-theme-text" data-i18n="cart-desc">Descubre nuestra selección de origen local.</p>
             <button id="cart-to-shop-btn"
-                class="px-8 py-4 border border-theme-text text-theme-text uppercase text-xs font-bold tracking-widest hover:bg-theme-text hover:text-theme-bg transition-colors duration-300 magnetic cursor-trigger hover-line">
+                class="px-8 py-4 border border-theme-text text-theme-text uppercase text-xs font-bold tracking-widest hover:bg-theme-text hover:text-theme-bg transition-colors duration-300 magnetic cursor-trigger hover-line" data-i18n="cart-explore">
                 Explorar Tienda
             </button>
         </div>
@@ -104,21 +104,22 @@
             <span class="font-serif text-2xl tracking-wide text-theme-accent">Don Gonzalo</span>
             <button id="close-menu-btn"
                 class="magnetic hover:opacity-60 transition-opacity flex items-center gap-4 uppercase text-xs tracking-widest cursor-trigger">
-                Cerrar <i data-lucide="x" class="w-8 h-8"></i>
+                <span data-i18n="cart-close">Cerrar</span> <i data-lucide="x" class="w-8 h-8"></i>
             </button>
         </div>
         <div class="flex flex-col justify-center h-full max-w-7xl mx-auto w-full space-y-4 md:space-y-6 relative z-10">
             <span class="text-xs uppercase tracking-widest opacity-50 mb-8 block ml-2">Explorar la Marca</span>
+            <a href="index.html" class="menu-link cursor-trigger text-4xl md:text-[4vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6" data-i18n="nav-home">Inicio</a>
             <a href="filosofia.html" data-bg="bg-filosofia"
-                class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">La
+                class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6" data-i18n="nav-philosophy">La
                 Filosofía</a>
             <a href="proceso.html" data-bg="bg-proceso"
-                class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">El
+                class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6" data-i18n="nav-process">El
                 Proceso</a>
             <a href="coleccion.html" data-bg="bg-coleccion"
-                class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">Colección</a>
+                class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6" data-i18n="nav-collection">Colección</a>
             <a href="casa.html" data-bg="bg-casa"
-                class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">Nuestra
+                class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6" data-i18n="nav-house">Nuestra
                 Casa</a>
         </div>
     </div>
@@ -127,10 +128,14 @@
     <nav id="navbar" class="fixed w-full z-40 transition-all duration-700 py-8 mix-blend-difference">
         <!-- Blend mode difference hace que el menú sea blanco sobre negro y negro sobre blanco automáticamente! (Truco avanzado de inmersión) -->
         <div id="nav-content" class="max-w-[95%] mx-auto flex justify-between items-center relative z-10 text-white">
-            <div class="w-24 md:w-32">
+            <div class="w-24 md:w-32 flex items-center gap-6">
                 <button
                     class="cart-trigger flex items-center gap-2 text-xs uppercase tracking-widest hover-line hidden md:inline-flex cursor-trigger magnetic">
-                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> Carrito
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> <span data-i18n="nav-cart">Carrito</span>
+                </button>
+                <!-- Selector de Idioma -->
+                <button id="lang-toggle" class="magnetic cursor-trigger text-[10px] font-bold tracking-widest hover:text-theme-accent transition-colors flex items-center gap-2">
+                    <i data-lucide="languages" class="w-3 h-3"></i> <span id="lang-toggle-text">ES</span>
                 </button>
             </div>
 
@@ -143,7 +148,7 @@
             <div class="w-24 md:w-32 flex justify-end">
                 <button id="open-menu-btn"
                     class="magnetic cursor-trigger uppercase tracking-[0.15em] text-xs font-bold hover:opacity-80 transition-opacity flex items-center gap-3">
-                    <span class="hidden md:inline hover-line">Menú</span>
+                    <span class="hidden md:inline hover-line" data-i18n="nav-menu">Menú</span>
                     <i data-lucide="align-right" class="w-6 h-6"></i>
                 </button>
             </div>
@@ -162,15 +167,15 @@
 
             <!-- Capa de Máscara de Texto SVG -->
             <div class="hero-mask-container">
-                <div class="hero-mask-text" id="hero-mask">
+                <div class="hero-mask-text" id="hero-mask" data-i18n="hero-home">
                     DON GONZALO
                 </div>
             </div>
 
             <!-- Texto Complementario Inmersivo -->
             <div class="absolute bottom-20 left-10 md:left-20 z-40 max-w-sm reveal reveal-delay-2">
-                <p class="text-xs uppercase tracking-[0.3em] font-bold text-theme-accent mb-4">Est. 2026</p>
-                <p class="text-lg md:text-xl font-light leading-relaxed">Tostión artesanal en el corazón de los Andes. Un viaje sensorial en cada taza.</p>
+                <p class="text-xs uppercase tracking-[0.3em] font-bold text-theme-accent mb-4" data-i18n="hero-est">Est. 2026</p>
+                <p class="text-lg md:text-xl font-light leading-relaxed" data-i18n="hero-tagline">Tostión artesanal en el corazón de los Andes. Un viaje sensorial en cada taza.</p>
             </div>
             
             <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-40 reveal reveal-delay-3">
@@ -186,9 +191,9 @@
     <!-- Marquee Continuo (Fuerza de marca) -->
     <div
         class="py-6 border-b border-theme-text/10 marquee-container relative z-20 bg-theme-bg uppercase font-bold tracking-widest text-sm text-theme-text/60">
-        <div class="marquee-content">
-            ✦ ASEQUIBLE PARA TODOS ✦ 100% COLOMBIANO ✦ TOSTIÓN MEDIA ✦ COMERCIO JUSTO ✦ ASEQUIBLE PARA TODOS ✦ 100%
-            COLOMBIANO ✦ TOSTIÓN MEDIA ✦ COMERCIO JUSTO ✦ ASEQUIBLE PARA TODOS ✦ 100% COLOMBIANO ✦
+        <div class="marquee-content" data-i18n="marquee-text">
+            ✦ CAFÉ DE ORIGEN ✦ 100% COLOMBIANO ✦ TOSTIÓN MEDIA ✦ COMERCIO JUSTO ✦ CAFÉ DE ORIGEN ✦ 100%
+            COLOMBIANO ✦ TOSTIÓN MEDIA ✦ COMERCIO JUSTO ✦ CAFÉ DE ORIGEN ✦ 100% COLOMBIANO ✦
         </div>
     </div>
 
@@ -197,14 +202,14 @@
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
             <div class="md:col-span-7 order-2 md:order-1">
                 <div class="reveal">
-                    <span class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-8 block">01 — Origen</span>
-                    <h2 class="section-title-giant font-serif mb-12">EL ALMA DE EL <br><span class="italic font-light text-theme-text/40">TOSTADO.</span></h2>
-                    <p class="text-xl md:text-2xl font-light leading-relaxed mb-12 max-w-xl">No solo vendemos café; preservamos una herencia. Cada grano de Don Gonzalo es un testimonio del respeto por la tierra y por quienes la trabajan.</p>
+                    <span class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-8 block" data-i18n="phi-num">01 — Origen</span>
+                    <h2 class="section-title-giant font-serif mb-12" data-i18n="phi-title">EL ALMA DE EL <br><span class="italic font-light text-theme-text/40">TOSTADO.</span></h2>
+                    <p class="text-xl md:text-2xl font-light leading-relaxed mb-12 max-w-xl" data-i18n="phi-text">No solo vendemos café; preservamos una herencia. Cada grano de Don Gonzalo es un testimonio del respeto por la tierra y por quienes la trabajan.</p>
                     <a href="filosofia.html" class="inline-flex items-center gap-6 group cursor-trigger">
                         <span class="w-16 h-16 rounded-full border border-theme-text/20 flex items-center justify-center group-hover:bg-theme-text group-hover:text-theme-bg transition-all duration-500">
                             <i data-lucide="plus" class="w-6 h-6"></i>
                         </span>
-                        <span class="uppercase text-xs font-bold tracking-widest hover-line">Nuestro Manifiesto Completo</span>
+                        <span class="uppercase text-xs font-bold tracking-widest hover-line" data-i18n="phi-btn">Nuestro Manifiesto Completo</span>
                     </a>
                 </div>
             </div>
@@ -220,10 +225,10 @@
     <section id="proceso" class="py-32 md:py-60 bg-theme-text text-theme-bg overflow-hidden">
         <div class="px-6 md:px-20 mb-20 flex justify-between items-end reveal">
             <div>
-                <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent mb-4 block">02 — Método</span>
-                <h2 class="text-5xl md:text-7xl font-serif">Artesanía de <br><span class="italic font-light opacity-40">Precisión</span></h2>
+                <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent mb-4 block" data-i18n="proc-num">02 — Método</span>
+                <h2 class="text-5xl md:text-7xl font-serif" data-i18n="proc-title">Artesanía de <br><span class="italic font-light opacity-40">Precisión</span></h2>
             </div>
-            <div class="hidden md:block max-w-xs text-sm font-light opacity-60">
+            <div class="hidden md:block max-w-xs text-sm font-light opacity-60" data-i18n="proc-desc">
                 Un ciclo perfecto de temperatura y tiempo diseñado para liberar el perfil oculto de cada región.
             </div>
         </div>
@@ -233,8 +238,8 @@
                 <div class="aspect-[16/9] bg-white/5 p-12 flex flex-col justify-between group cursor-trigger">
                     <span class="text-6xl font-serif opacity-10 group-hover:opacity-40 group-hover:text-theme-accent transition-all duration-700">01</span>
                     <div>
-                        <h3 class="text-3xl font-serif mb-4 italic">Cosecha Selectiva</h3>
-                        <p class="text-sm font-light opacity-60 max-w-sm">Solo los cerezos en su punto óptimo de madurez entran en nuestra selección.</p>
+                        <h3 class="text-3xl font-serif mb-4 italic" data-i18n="proc-step1-name">Cosecha Selectiva</h3>
+                        <p class="text-sm font-light opacity-60 max-w-sm" data-i18n="proc-step1-desc">Solo los cerezos en su punto óptimo de madurez entran en nuestra selección.</p>
                     </div>
                 </div>
             </div>
@@ -242,8 +247,8 @@
                 <div class="aspect-[16/9] bg-white/5 p-12 flex flex-col justify-between group cursor-trigger">
                     <span class="text-6xl font-serif opacity-10 group-hover:opacity-40 group-hover:text-theme-accent transition-all duration-700">02</span>
                     <div>
-                        <h3 class="text-3xl font-serif mb-4 italic">La Curva de Tueste</h3>
-                        <p class="text-sm font-light opacity-60 max-w-sm">Perfiles personalizados que resaltan la acidez brillante y el cuerpo sedoso.</p>
+                        <h3 class="text-3xl font-serif mb-4 italic" data-i18n="proc-step2-name">La Curva de Tueste</h3>
+                        <p class="text-sm font-light opacity-60 max-w-sm" data-i18n="proc-step2-desc">Perfiles personalizados que resaltan la acidez brillante y el cuerpo sedoso.</p>
                     </div>
                 </div>
             </div>
@@ -251,8 +256,8 @@
                 <div class="aspect-[16/9] bg-white/5 p-12 flex flex-col justify-between group cursor-trigger">
                     <span class="text-6xl font-serif opacity-10 group-hover:opacity-40 group-hover:text-theme-accent transition-all duration-700">03</span>
                     <div>
-                        <h3 class="text-3xl font-serif mb-4 italic">Catación Técnica</h3>
-                        <p class="text-sm font-light opacity-60 max-w-sm">Cada lote es validado por nuestros maestros catadores antes del empaque.</p>
+                        <h3 class="text-3xl font-serif mb-4 italic" data-i18n="proc-step3-name">Catación Técnica</h3>
+                        <p class="text-sm font-light opacity-60 max-w-sm" data-i18n="proc-step3-desc">Cada lote es validado por nuestros maestros catadores antes del empaque.</p>
                     </div>
                 </div>
             </div>
@@ -260,7 +265,7 @@
         
         <div class="mt-20 text-center reveal">
             <a href="proceso.html" class="inline-flex items-center gap-4 uppercase tracking-[0.3em] text-[10px] font-bold hover:text-theme-accent transition-colors cursor-trigger">
-                Ver Documental de Tostión <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                <span data-i18n="proc-btn">Ver Documental de Tostión</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
         </div>
     </section>
@@ -270,10 +275,10 @@
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
                 <div class="reveal">
-                    <span class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-8 block">03 — Catálogo</span>
-                    <h2 class="text-6xl md:text-8xl font-serif leading-none mb-12">CURURÍA <br><span class="italic font-light text-theme-text/40">LIMITADA.</span></h2>
-                    <p class="text-lg font-light opacity-70 mb-12 max-w-md">Nuestras variedades cambian con las estaciones. Solo traemos lo mejor de cada cosecha en su momento pico.</p>
-                    <a href="coleccion.html" class="px-12 py-5 border border-theme-text text-theme-text uppercase text-[10px] font-bold tracking-[0.3em] hover:bg-theme-text hover:text-theme-bg transition-all duration-500 magnetic cursor-trigger">
+                    <span class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-8 block" data-i18n="coll-num">03 — Catálogo</span>
+                    <h2 class="text-6xl md:text-8xl font-serif leading-none mb-12" data-i18n="coll-title">CURADURÍA <br><span class="italic font-light text-theme-text/40">LIMITADA.</span></h2>
+                    <p class="text-lg font-light opacity-70 mb-12 max-w-md" data-i18n="coll-text">Nuestras variedades cambian con las estaciones. Solo traemos lo mejor de cada cosecha en su momento pico.</p>
+                    <a href="coleccion.html" class="px-12 py-5 border border-theme-text text-theme-text uppercase text-[10px] font-bold tracking-[0.3em] hover:bg-theme-text hover:text-theme-bg transition-all duration-500 magnetic cursor-trigger" data-i18n="coll-btn">
                         Explorar la Tienda
                     </a>
                 </div>
@@ -319,13 +324,13 @@
             <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover grayscale-[30%] brightness-50">
         </div>
         <div class="relative z-10 text-center text-white px-6 reveal">
-            <span class="uppercase tracking-[0.5em] text-[10px] font-bold text-theme-accent mb-8 block">04 — Medellín</span>
-            <h2 class="text-6xl md:text-9xl font-serif mb-12">EL <br><span class="italic font-light text-white/50">REFUGIO.</span></h2>
+            <span class="uppercase tracking-[0.5em] text-[10px] font-bold text-theme-accent mb-8 block" data-i18n="house-num">04 — Medellín</span>
+            <h2 class="text-6xl md:text-9xl font-serif mb-12" data-i18n="house-title">EL <br><span class="italic font-light text-white/50">REFUGIO.</span></h2>
             <a href="casa.html" class="inline-flex items-center gap-6 group cursor-trigger">
                 <span class="w-20 h-20 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-700">
                     <i data-lucide="map-pin" class="w-8 h-8"></i>
                 </span>
-                <span class="uppercase text-[10px] font-bold tracking-[0.4em] hover-line">Ubicación y Horarios</span>
+                <span class="uppercase text-[10px] font-bold tracking-[0.4em] hover-line" data-i18n="house-btn">Ubicación y Horarios</span>
             </a>
         </div>
     </section>
@@ -335,14 +340,14 @@
         <div class="max-w-[95%] mx-auto relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32 reveal">
                 <div class="md:col-span-6">
-                    <h3 class="text-4xl md:text-7xl font-serif mb-8 leading-tight">¿Hablamos de <br /><span
+                    <h3 class="text-4xl md:text-7xl font-serif mb-8 leading-tight" data-i18n="footer-talk">¿Hablamos de <br /><span
                             class="italic text-theme-accent">Café?</span></h3>
                     <a href="mailto:hola@dongonzalo.com"
                         class="text-2xl md:text-3xl font-light hover:text-theme-accent transition-colors hover-line cursor-trigger">hola@dongonzalo.com</a>
                 </div>
 
                 <div class="md:col-span-3">
-                    <h4 class="uppercase tracking-widest text-xs opacity-50 mb-4 font-bold text-theme-accent">Conecta</h4>
+                    <h4 class="uppercase tracking-widest text-xs opacity-50 mb-4 font-bold text-theme-accent" data-i18n="footer-connect">Conecta</h4>
                     <div class="flex flex-col space-y-4">
                         <a href="#" class="text-xl font-light hover:text-theme-accent transition-colors cursor-trigger">Instagram</a>
                         <a href="#" class="text-xl font-light hover:text-theme-accent transition-colors cursor-trigger">WhatsApp</a>
@@ -351,11 +356,10 @@
                 </div>
 
                 <div class="md:col-span-4 flex flex-col">
-                    <h4 class="uppercase tracking-widest text-xs opacity-50 mb-4 font-bold text-theme-accent">Únete a la Rebelión</h4>
-                    <p class="font-light opacity-60 text-sm mb-4">Noticias de tostiones frescas y ediciones limitadas.</p>
+                    <h4 class="uppercase tracking-widest text-xs opacity-50 mb-4 font-bold text-theme-accent" data-i18n="footer-join">Únete a la Rebelión</h4>
                     <form class="flex border-b border-white/20 pb-2 hover-line relative w-full group">
                         <input type="email" placeholder="tu@email.com" class="bg-transparent border-none outline-none w-full text-white placeholder-white/30 font-light cursor-trigger peer" required>
-                        <button type="submit" class="absolute right-0 text-theme-accent uppercase tracking-widest text-[10px] font-bold opacity-0 peer-focus:opacity-100 group-hover:opacity-100 transition-opacity cursor-trigger">
+                        <button type="submit" class="absolute right-0 text-theme-accent uppercase tracking-widest text-[10px] font-bold opacity-0 peer-focus:opacity-100 group-hover:opacity-100 transition-opacity cursor-trigger" data-i18n="footer-join-btn">
                             Unir
                         </button>
                     </form>
@@ -373,9 +377,9 @@
             <div
                 class="flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest opacity-40 font-bold">
                 <div class="flex items-center gap-4 mb-4 md:mb-0">
-                    <span>© 2026 Don Gonzalo.</span>
+                    <span data-i18n="footer-copy">© 2026 Don Gonzalo.</span>
                 </div>
-                <span>Tostado en la Montaña.</span>
+                <span data-i18n="footer-tag">Tostado en la Montaña.</span>
             </div>
         </div>
     </footer>

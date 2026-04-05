@@ -94,54 +94,85 @@
     <!-- Navegación Fija Dinámica -->
     <nav id="navbar" class="fixed w-full z-40 transition-all duration-700 py-8 mix-blend-difference">
         <div id="nav-content" class="max-w-[95%] mx-auto flex justify-between items-center relative z-10 text-white">
-            <div class="w-24 md:w-32">
+            <div class="w-24 md:w-32 flex items-center gap-6">
                 <a href="index.html" class="flex items-center gap-2 text-xs uppercase tracking-widest hover-line cursor-trigger magnetic">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Home
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="nav-home">Home</span>
                 </a>
+                <!-- Selector de Idioma -->
+                <button id="lang-toggle" class="magnetic cursor-trigger text-[10px] font-bold tracking-widest hover:text-theme-accent transition-colors flex items-center gap-2">
+                    <i data-lucide="languages" class="w-3 h-3"></i> <span id="lang-toggle-text">ES</span>
+                </button>
             </div>
             <div class="flex-shrink-0 flex justify-center items-center cursor-trigger magnetic">
                 <span class="font-serif text-2xl md:text-3xl font-bold tracking-wide">Don Gonzalo</span>
             </div>
             <div class="w-24 md:w-32 flex justify-end">
                 <button id="open-menu-btn" class="magnetic cursor-trigger uppercase tracking-[0.15em] text-xs font-bold hover:opacity-80 transition-opacity flex items-center gap-3">
-                    <span class="hidden md:inline hover-line">Menú</span>
+                    <span class="hidden md:inline hover-line" data-i18n="nav-menu">Menú</span>
                     <i data-lucide="align-right" class="w-6 h-6"></i>
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Filosofía Monumental -->
     <section class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-theme-bg">
         <div class="absolute inset-0 w-full h-full js-parallax" data-speed="0.15">
             <img src="https://images.unsplash.com/photo-1611162458324-aae1eb4129a4?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover grayscale brightness-50">
         </div>
         <div class="hero-mask-container">
-            <div class="hero-mask-text" id="hero-mask" style="mix-blend-mode: screen;">
+            <div class="hero-mask-text" id="hero-mask" style="mix-blend-mode: screen;" data-i18n="hero-philosophy">
                 REBELIÓN
             </div>
         </div>
         <div class="absolute bottom-20 text-center reveal reveal-delay-2">
-            <span class="uppercase tracking-[0.5em] text-[10px] font-bold text-theme-accent mb-4 block">Capítulo I</span>
-            <p class="text-xl font-serif italic text-white/70">Un pacto con el origen.</p>
+            <span class="uppercase tracking-[0.5em] text-[10px] font-bold text-theme-accent mb-4 block" data-i18n="phi-hero-cap">Capítulo I</span>
+            <p class="text-xl font-serif italic text-white/70" data-i18n="phi-hero-tag">Un pacto con el origen.</p>
         </div>
     </section>
 
-    <!-- Contenido Editorial -->
+    <!-- Contenido Editorial Expandido -->
     <section class="py-32 md:py-60 px-6 relative bg-theme-bg overflow-hidden">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
-            <div class="md:col-span-6 reveal">
-                <h2 class="section-title-giant mb-12">Calidad <br><span class="italic font-light text-theme-text/40">sin excusas.</span></h2>
-                <div class="space-y-8 text-xl font-light leading-relaxed opacity-80 text-justify">
-                    <p>Durante años, el mejor grano de Colombia ha cruzado océanos, dejando atrás a quienes lo cultivan con el mayor de los cariños.</p>
-                    <p><strong>Don Gonzalo</strong> nace como una respuesta y una rebelión frente a ese modelo de exportación purista.</p>
+        <div class="max-w-7xl mx-auto space-y-40">
+            <!-- Bloque 1: Rebelión -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
+                <div class="md:col-span-6 reveal">
+                    <h2 class="section-title-giant mb-12" data-i18n="phi-h2">Nuestra <br><span class="italic font-light text-theme-text/40">Rebelión.</span></h2>
+                    <div class="space-y-8 text-xl font-light leading-relaxed opacity-80 text-justify">
+                        <p data-i18n="phi-p1">Durante décadas, el mejor grano de Colombia ha cruzado océanos, dejando atrás a quienes lo cultivan con el mayor de los cariños. Don Gonzalo nace para revertir esa historia.</p>
+                        <p data-i18n="phi-p2">Nuestra rebelión es contra la mediocridad y el olvido. Somos el puente entre la mística de la montaña y tu taza diaria, asegurando que la excelencia se quede en casa.</p>
+                    </div>
+                </div>
+                <div class="md:col-span-6">
+                    <div class="parallax-wrapper h-[80vh] reveal reveal-delay-1 shadow-2xl skew-x-1">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax" data-speed="0.12">
+                    </div>
                 </div>
             </div>
-            <div class="md:col-span-6">
-                <div class="parallax-wrapper h-[80vh] reveal reveal-delay-1 shadow-2xl skew-x-1">
-                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax" data-speed="0.12">
+
+            <!-- Bloque 2: Impacto -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
+                <div class="md:col-span-6 md:order-2 reveal">
+                    <h2 class="section-title-giant mb-12" data-i18n="phi-impact-h2">Impacto <br><span class="italic font-light text-theme-text/40">en Origen.</span></h2>
+                    <div class="space-y-8 text-xl font-light leading-relaxed opacity-80 text-justify">
+                        <p data-i18n="phi-impact-p">Trabajamos mano a mano con caficultores independientes de Antioquia y Huila. Compramos café procesado con maestría, pagando precios que honran el sudor y la tierra.</p>
+                    </div>
+                </div>
+                <div class="md:col-span-6 md:order-1">
+                    <div class="parallax-wrapper h-[80vh] reveal reveal-delay-1 shadow-2xl skew-y-[-3deg]">
+                        <img src="https://images.unsplash.com/photo-1524414139215-35c99f80112c?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax" data-speed="0.1">
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- CTA Final: Tienda -->
+    <section class="py-32 bg-theme-text text-theme-bg text-center">
+        <div class="max-w-4xl mx-auto px-6 reveal">
+            <h2 class="text-4xl md:text-6xl font-serif mb-12 italic" data-i18n="phi-cta-title">¿Listo para probar la mística?</h2>
+            <a href="coleccion.html" class="px-12 py-5 border border-theme-bg text-theme-bg uppercase text-xs font-bold tracking-[0.3em] hover:bg-theme-bg hover:text-theme-text transition-all duration-500 magnetic cursor-trigger" data-i18n="coll-btn">
+                Explorar la Tienda
+            </a>
         </div>
     </section>
 

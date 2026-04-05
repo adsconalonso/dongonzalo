@@ -94,50 +94,53 @@
     <!-- Navegación Fija Dinámica -->
     <nav id="navbar" class="fixed w-full z-40 transition-all duration-700 py-8 mix-blend-difference">
         <div id="nav-content" class="max-w-[95%] mx-auto flex justify-between items-center relative z-10 text-white">
-            <div class="w-24 md:w-32">
+            <div class="w-24 md:w-32 flex items-center gap-6">
                 <a href="index.html" class="flex items-center gap-2 text-xs uppercase tracking-widest hover-line cursor-trigger magnetic">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Home
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="nav-home">Home</span>
                 </a>
+                <!-- Selector de Idioma -->
+                <button id="lang-toggle" class="magnetic cursor-trigger text-[10px] font-bold tracking-widest hover:text-theme-accent transition-colors flex items-center gap-2">
+                    <i data-lucide="languages" class="w-3 h-3"></i> <span id="lang-toggle-text">ES</span>
+                </button>
             </div>
             <div class="flex-shrink-0 flex justify-center items-center cursor-trigger magnetic">
                 <span class="font-serif text-2xl md:text-3xl font-bold tracking-wide">Don Gonzalo</span>
             </div>
             <div class="w-24 md:w-32 flex justify-end">
                 <button id="open-menu-btn" class="magnetic cursor-trigger uppercase tracking-[0.15em] text-xs font-bold hover:opacity-80 transition-opacity flex items-center gap-3">
-                    <span class="hidden md:inline hover-line">Menú</span>
+                    <span class="hidden md:inline hover-line" data-i18n="nav-menu">Menú</span>
                     <i data-lucide="align-right" class="w-6 h-6"></i>
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Proceso Monumental -->
     <section class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-theme-bg">
         <div class="absolute inset-0 w-full h-full js-parallax" data-speed="0.15">
             <source src="https://cdn.coverr.co/videos/coverr-coffee-beans-in-a-roaster-5231/1080p.mp4" type="video/mp4" />
             <img src="https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover brightness-50">
         </div>
         <div class="hero-mask-container">
-            <div class="hero-mask-text" id="hero-mask" style="mix-blend-mode: screen;">
+            <div class="hero-mask-text" id="hero-mask" style="mix-blend-mode: screen;" data-i18n="hero-process">
                 MÉTODO
             </div>
         </div>
         <div class="absolute bottom-20 text-center reveal reveal-delay-2">
-            <span class="uppercase tracking-[0.5em] text-[10px] font-bold text-theme-accent mb-4 block">Capítulo II</span>
-            <p class="text-xl font-serif italic text-white/70">La ciencia detrás del sentimiento.</p>
+            <span class="uppercase tracking-[0.5em] text-[10px] font-bold text-theme-accent mb-4 block" data-i18n="proc-hero-cap">Capítulo II</span>
+            <p class="text-xl font-serif italic text-white/70" data-i18n="proc-hero-tag">La ciencia detrás del sentimiento.</p>
         </div>
     </section>
 
-    <!-- Contenido Proceso -->
+    <!-- Contenido Proceso Expandido (6 Etapas) -->
     <section class="py-32 md:py-60 px-6 bg-theme-bg overflow-hidden">
         <div class="max-w-7xl mx-auto space-y-60">
             
-            <!-- Etapa 1 -->
+            <!-- Etapa 1: Cosecha -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
                 <div class="md:col-span-6 reveal">
-                    <span class="text-8xl font-serif italic opacity-10 mb-8 block">01</span>
-                    <h2 class="text-6xl md:text-8xl font-serif mb-12 italic">Cosecha <br><span class="italic font-light text-theme-text/40">Selectiva.</span></h2>
-                    <p class="text-xl font-light opacity-80 leading-relaxed text-justify">No usamos máquinas de arrastre industrial. Trabajamos hombro a hombro con familias que recorren la topografía andina para arrancar únicamente las cerezas en su punto de madurez perfecto.</p>
+                    <span class="text-8xl font-serif italic opacity-10 mb-8 block" data-i18n="proc-step1-title">01</span>
+                    <h2 class="text-6xl md:text-8xl font-serif mb-12 italic" data-i18n="proc-step1-h2">Cosecha <br><span class="italic font-light text-theme-text/40">Selectiva.</span></h2>
+                    <p class="text-xl font-light opacity-80 leading-relaxed text-justify" data-i18n="proc-step1-p">Recorremos los cafetales de altura, seleccionando solo los cerezos en su punto óptimo de madurez. Un trabajo de paciencia que garantiza la dulzura desde el origen.</p>
                 </div>
                 <div class="md:col-span-6">
                     <div class="parallax-wrapper h-[70vh] reveal reveal-delay-1 shadow-2xl">
@@ -146,19 +149,85 @@
                 </div>
             </div>
 
-            <!-- Etapa 2 -->
+            <!-- Etapa 2: Beneficio -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
                 <div class="md:col-span-6 md:order-2 reveal">
-                    <span class="text-8xl font-serif italic opacity-10 mb-8 block">02</span>
-                    <h2 class="text-6xl md:text-8xl font-serif mb-12 italic">Tostión <br><span class="italic font-light text-theme-text/40">Precisa.</span></h2>
-                    <p class="text-xl font-light opacity-80 leading-relaxed text-justify">Aplicamos curvas de tostión diseñadas para destapar el ADN de cada bulto. Tuestes medios que respetan la acidez natural, el dulzor del azúcar caramelizado y los tonos florales.</p>
+                    <span class="text-8xl font-serif italic opacity-10 mb-8 block" data-i18n="proc-step2-title">02</span>
+                    <h2 class="text-6xl md:text-8xl font-serif mb-12 italic" data-i18n="proc-step2-h2">Beneficio <br><span class="italic font-light text-theme-text/40">y Fermentación.</span></h2>
+                    <p class="text-xl font-light opacity-80 leading-relaxed text-justify" data-i18n="proc-step2-p">Transformamos el fruto. Según el perfil buscado (Lavado, Natural o Honey), liberamos el alma del grano preservando sus notas frutales y florales.</p>
                 </div>
                 <div class="md:col-span-6 md:order-1">
                     <div class="parallax-wrapper h-[70vh] reveal reveal-delay-1 shadow-2xl skew-y-2">
-                        <img src="https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax" data-speed="0.12">
+                        <img src="https://images.unsplash.com/photo-1442410313331-50798be1a80c?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax" data-speed="0.12">
                     </div>
                 </div>
             </div>
+
+            <!-- Etapa 3: Secado -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
+                <div class="md:col-span-6 reveal">
+                    <span class="text-8xl font-serif italic opacity-10 mb-8 block" data-i18n="proc-step3-title">03</span>
+                    <h2 class="text-6xl md:text-8xl font-serif mb-12 italic" data-i18n="proc-step3-h2">Secado <br><span class="italic font-light text-theme-text/40">Controlado.</span></h2>
+                    <p class="text-xl font-light opacity-80 leading-relaxed text-justify" data-i18n="proc-step3-p">El sol andino hace su parte. En patios o marquesinas, el café reposa hasta alcanzar la humedad ideal, clave para su conservación y sabor.</p>
+                </div>
+                <div class="md:col-span-6">
+                    <div class="parallax-wrapper h-[70vh] reveal reveal-delay-1 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax" data-speed="0.08">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Etapa 4: Trilla -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
+                <div class="md:col-span-6 md:order-2 reveal">
+                    <span class="text-8xl font-serif italic opacity-10 mb-8 block" data-i18n="proc-step4-title">04</span>
+                    <h2 class="text-6xl md:text-8xl font-serif mb-12 italic" data-i18n="proc-step4-h2">Trilla <br><span class="italic font-light text-theme-text/40">de Calidad.</span></h2>
+                    <p class="text-xl font-light opacity-80 leading-relaxed text-justify" data-i18n="proc-step4-p">Retiramos el pergamino y clasificamos cada grano por tamaño, densidad y color. Solo lo mejor de la cosecha se convierte en Don Gonzalo.</p>
+                </div>
+                <div class="md:col-span-6 md:order-1">
+                    <div class="parallax-wrapper h-[70vh] reveal reveal-delay-1 shadow-2xl skew-x-1">
+                        <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax" data-speed="0.15">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Etapa 5: Tostión -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
+                <div class="md:col-span-6 reveal">
+                    <span class="text-8xl font-serif italic opacity-10 mb-8 block" data-i18n="proc-step5-title">05</span>
+                    <h2 class="text-6xl md:text-8xl font-serif mb-12 italic" data-i18n="proc-step5-h2">Tostión <br><span class="italic font-light text-theme-text/40">de Autor.</span></h2>
+                    <p class="text-xl font-light opacity-80 leading-relaxed text-justify" data-i18n="proc-step5-p">En el fuego se revela el ADN. Desarrollamos perfiles de tueste medio que resaltan la acidez brillante y el cuerpo sedoso de nuestras montañas.</p>
+                </div>
+                <div class="md:col-span-6">
+                    <div class="parallax-wrapper h-[70vh] reveal reveal-delay-1 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax" data-speed="0.1">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Etapa 6: Catación -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-24 items-center">
+                <div class="md:col-span-6 md:order-2 reveal">
+                    <span class="text-8xl font-serif italic opacity-10 mb-8 block" data-i18n="proc-step6-title">06</span>
+                    <h2 class="text-6xl md:text-8xl font-serif mb-12 italic" data-i18n="proc-step6-h2">Excelencia <br><span class="italic font-light text-theme-text/40">en Taza.</span></h2>
+                    <p class="text-xl font-light opacity-80 leading-relaxed text-justify" data-i18n="proc-step6-p">Probamos cada lote para asegurar la excelencia sensorial. Sellamos en origen para que la mística del campo llegue intacta a tu hogar.</p>
+                </div>
+                <div class="md:col-span-6 md:order-1">
+                    <div class="parallax-wrapper h-[70vh] reveal reveal-delay-1 shadow-2xl skew-y-[-2deg]">
+                        <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax" data-speed="0.12">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final: Tienda -->
+    <section class="py-32 bg-theme-surface text-center">
+        <div class="max-w-4xl mx-auto px-6 reveal">
+            <h2 class="text-4xl md:text-6xl font-serif mb-12 italic" data-i18n="phi-cta-title">¿Listo para probar la mística?</h2>
+            <a href="coleccion.html" class="px-12 py-5 border border-theme-text text-theme-text uppercase text-xs font-bold tracking-[0.3em] hover:bg-theme-text hover:text-theme-bg transition-all duration-500 magnetic cursor-trigger" data-i18n="coll-btn">
+                Explorar la Tienda
+            </a>
         </div>
     </section>
 
