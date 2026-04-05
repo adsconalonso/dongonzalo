@@ -1,0 +1,225 @@
+/* ==========================================================================
+   DON GONZALO - GLOBAL DESIGN SYSTEM (BOLD & INNOVATIVE)
+   ========================================================================== */
+
+:root {
+    --theme-bg: #F5F2ED;      /* Hueso Profundo */
+    --theme-text: #1A1412;    /* Ébano */
+    --theme-accent: #8C4A23;  /* Cobre Tostado */
+    --theme-surface: #E6E1D8; /* Gris Cálido */
+    --theme-white: #FFFFFF;
+}
+
+/* 1. Global Reset & Body */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* 2. Film Grain (Analog Effect) */
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.055;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* 3. Custom Cursor (Desktop Only) */
+@media (pointer: fine) {
+    body { cursor: none; }
+    a, button, .cursor-trigger { cursor: none; }
+
+    .cursor-dot {
+        position: fixed;
+        width: 6px;
+        height: 6px;
+        background-color: var(--theme-accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 10000;
+        transform: translate(-50%, -50%);
+        transition: transform 0.1s ease-out;
+    }
+
+    .cursor-outline {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(140, 74, 35, 0.4);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cursor-hover .cursor-outline {
+        width: 60px;
+        height: 60px;
+        background-color: rgba(140, 74, 35, 0.05);
+        border-color: var(--theme-accent);
+    }
+}
+
+/* 4. Monumental Typography */
+.section-title-giant {
+    font-size: clamp(4rem, 15vw, 12rem);
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    font-family: 'Playfair Display', serif;
+}
+
+.font-serif { font-family: 'Playfair Display', serif; }
+
+/* 5. Reveal Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* 6. Parallax Container */
+.parallax-wrapper {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.parallax-img {
+    width: 100%;
+    height: 130%;
+    object-fit: cover;
+    position: absolute;
+    top: -15%;
+    left: 0;
+}
+
+/* 7. Fullscreen Menu Previews */
+.menu-bg-preview {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+    filter: brightness(0.4) grayscale(0.5);
+    transform: scale(1.1);
+}
+
+.menu-link:hover ~ .menu-bg-preview {
+    opacity: 0.3;
+    transform: scale(1);
+}
+
+/* 8. Hero Mask Effect */
+.hero-mask-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 30;
+}
+
+.hero-mask-text {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 14vw;
+    line-height: 0.8;
+    fill: var(--theme-bg);
+    background: var(--theme-bg);
+    mix-blend-mode: screen;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 9. Utility Classes */
+.magnetic { transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+.hover-line {
+    position: relative;
+    display: inline-block;
+}
+
+.hover-line::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: currentColor;
+    transform-origin: bottom right;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-line:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/* 10. Horizontal Scroll System */
+.horizontal-scroll-section {
+    overflow-x: auto;
+    display: flex;
+    gap: 4rem;
+    padding: 0 5vw;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.horizontal-scroll-section::-webkit-scrollbar { display: none; }
+
+.horizontal-scroll-item {
+    flex: 0 0 80vw;
+    scroll-snap-align: center;
+}
+
+/* 11. Custom Animations */
+@keyframes scroll-down {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+.animate-scroll-line {
+    animation: scroll-down 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
