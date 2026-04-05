@@ -50,24 +50,6 @@
     <div class="cursor-dot hidden md:block" id="cursor-dot"></div>
     <div class="cursor-outline hidden md:block" id="cursor-outline"></div>
 
-    <!-- Carrito de Compras Overlay (Global) -->
-    <div id="cart-drawer" class="fixed inset-y-0 right-0 z-[110] w-full md:w-[450px] bg-theme-bg text-theme-text transform translate-x-full transition-transform duration-500 ease-in-out shadow-2xl flex flex-col">
-        <div class="px-8 flex justify-between items-center py-8 border-b border-theme-text/10">
-            <span class="font-serif text-2xl tracking-wide text-theme-accent" data-i18n="cart-title">Mochila</span>
-            <button id="close-cart-btn" class="magnetic hover:opacity-60 transition-opacity flex items-center gap-4 uppercase text-xs tracking-widest cursor-trigger">
-                <span data-i18n="cart-close">Cerrar</span> <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-        </div>
-        <div class="flex-grow flex flex-col justify-center items-center p-8 text-center bg-[#FDFBF7]">
-            <i data-lucide="shopping-bag" class="w-16 h-16 opacity-10 mb-6 text-theme-accent"></i>
-            <p class="font-serif text-2xl mb-2 text-theme-text" data-i18n="cart-empty">Tu mochila está vacía</p>
-            <p class="font-light opacity-60 text-sm mb-8 text-theme-text" data-i18n="cart-desc">Descubre nuestra selección de origen local.</p>
-            <button id="cart-to-shop-btn" class="px-8 py-4 border border-theme-text text-theme-text uppercase text-xs font-bold tracking-widest hover:bg-theme-text hover:text-theme-bg transition-colors duration-300 magnetic cursor-trigger hover-line" data-i18n="cart-explore">
-                Explorar Tienda
-            </button>
-        </div>
-    </div>
-    <div id="cart-backdrop" class="fixed inset-0 bg-theme-text/10 backdrop-blur-sm z-[105] opacity-0 pointer-events-none transition-opacity duration-500"></div>
 
     <!-- Menú Fullscreen Overlay (Global) -->
     <div id="menu-overlay" class="fixed inset-0 z-[100] bg-theme-text text-theme-bg flex flex-col p-8 md:p-16 transition-all duration-700 ease-in-out opacity-0 pointer-events-none">
