@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Don Gonzalo - Café de Especialidad</title>
+
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configuración del tema -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theme: {
+                            bg: '#F5F2ED',      /* Hueso más profundo y texturizado */
+                            text: '#1A1412',    /* Ébano casi negro */
+                            accent: '#8C4A23',  /* Cobre tostado vibrante */
+                            surface: '#E6E1D8'  /* Gris cálido */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Iconos de Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* ================= INMERSIÓN VISUAL ================= */
+
+        /* Textura de Grano Fotográfico */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.035;
+            mix-blend-mode: multiply;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Cursor Personalizado (Oculto en móviles) */
+        @media (pointer: fine) {
+            body {
+                cursor: none;
+            }
+
+            a,
+            button,
+            .magnetic {
+                cursor: none;
+            }
+
+            .cursor-dot {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 6px;
+                height: 6px;
+                background-color: #8C4A23;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 10000;
+                transform: translate(-50%, -50%);
+                transition: transform 0.15s ease-out;
+            }
+
+            .cursor-outline {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 40px;
+                height: 40px;
+                border: 1px solid rgba(140, 74, 35, 0.4);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+            }
+
+            .cursor-hover .cursor-outline {
+                width: 60px;
+                height: 60px;
+                background-color: rgba(140, 74, 35, 0.05);
+                border-color: #8C4A23;
+            }
+        }
+
+        /* Botones Magnéticos */
+        .magnetic {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Animaciones Awwwards Style */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 {
+            transition-delay: 0.1s;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: 0.2s;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: 0.3s;
+        }
+
+        .img-hover {
+            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .img-container {
+            overflow: hidden;
+        }
+
+        .img-container:hover .img-hover {
+            transform: scale(1.08);
+        }
+
+        /* Banner Continuo */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 25s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Línea animada en botones */
+        .hover-line {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 2px;
+        }
+
+        .hover-line::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: currentColor;
+            transform-origin: bottom right;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .hover-line:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Scroll Horizontal Sutil */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Efecto de Parallax Nativo CSS para imágenes */
+        .parallax-wrapper {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .parallax-img {
+            position: absolute;
+            top: -15%;
+            left: 0;
+            width: 100%;
+            height: 130%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-theme-bg text-theme-text font-sans font-light selection:bg-theme-accent selection:text-white min-h-screen overflow-x-hidden">
+
+    <!-- Elementos de Inmersión -->
+    <div class="noise-overlay"></div>
+    <div class="cursor-dot hidden md:block" id="cursor-dot"></div>
+    <div class="cursor-outline hidden md:block" id="cursor-outline"></div>
+
+    <!-- Carrito de Compras Overlay -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 z-[110] w-full md:w-[450px] bg-theme-bg text-theme-text transform translate-x-full transition-transform duration-500 ease-in-out shadow-2xl flex flex-col">
+        <div class="px-8 flex justify-between items-center py-8 border-b border-theme-text/10">
+            <span class="font-serif text-2xl tracking-wide text-theme-accent">Mochila</span>
+            <button id="close-cart-btn" class="magnetic hover:opacity-60 transition-opacity flex items-center gap-4 uppercase text-xs tracking-widest cursor-trigger">
+                Cerrar <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <div class="flex-grow flex flex-col justify-center items-center p-8 text-center bg-[#FDFBF7]">
+            <i data-lucide="shopping-bag" class="w-16 h-16 opacity-10 mb-6 text-theme-accent"></i>
+            <p class="font-serif text-2xl mb-2 text-theme-text">Tu mochila está vacía</p>
+            <p class="font-light opacity-60 text-sm mb-8 text-theme-text">Descubre nuestra selección de origen local.</p>
+            <button id="cart-to-shop-btn" class="px-8 py-4 border border-theme-text text-theme-text uppercase text-xs font-bold tracking-widest hover:bg-theme-text hover:text-theme-bg transition-colors duration-300 magnetic cursor-trigger hover-line">
+                Explorar Tienda
+            </button>
+        </div>
+        <div class="absolute bottom-[-10%] right-[-10%] opacity-[0.03] pointer-events-none z-0">
+            <i data-lucide="coffee" class="w-[800px] h-[800px]"></i>
+        </div>
+    </div>
+    <!-- Overlay oscurecido para carrito -->
+    <div id="cart-backdrop" class="fixed inset-0 bg-theme-text/10 backdrop-blur-sm z-[105] opacity-0 pointer-events-none transition-opacity duration-500"></div>
+
+    <!-- Menú Fullscreen Overlay -->
+    <div id="menu-overlay"
+        class="fixed inset-0 z-[100] bg-theme-text text-theme-bg flex flex-col p-8 md:p-16 transition-all duration-700 ease-in-out opacity-0 pointer-events-none">
+        <div class="flex justify-between items-center w-full max-w-7xl mx-auto">
+            <span class="font-serif text-2xl tracking-wide text-theme-accent">Don Gonzalo</span>
+            <button id="close-menu-btn"
+                class="magnetic hover:opacity-60 transition-opacity flex items-center gap-4 uppercase text-xs tracking-widest cursor-trigger">
+                Cerrar <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+        </div>
+        <div class="flex flex-col justify-center h-full max-w-7xl mx-auto w-full space-y-4 md:space-y-6 relative z-10">
+            <span class="text-xs uppercase tracking-widest opacity-50 mb-8 block ml-2">Explorar la Marca</span>
+            <a href="filosofia.html"
+                class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">La
+                Filosofía</a>
+            <a href="proceso.html"
+                class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">El
+                Proceso</a>
+            <a href="coleccion.html"
+                class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">Colección</a>
+            <a href="casa.html"
+                class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">Nuestra
+                Casa</a>
+        </div>
+        <!-- Elemento de fondo gigante en el menú -->
+        <div class="absolute -bottom-20 -right-20 opacity-5 pointer-events-none z-0">
+            <i data-lucide="coffee" class="w-[800px] h-[800px]"></i>
+        </div>
+    </div>
+
+    <!-- Navegación Fija Dinámica -->
+    <nav id="navbar" class="fixed w-full z-40 transition-all duration-700 py-8 mix-blend-difference">
+        <!-- Blend mode difference hace que el menú sea blanco sobre negro y negro sobre blanco automáticamente! (Truco avanzado de inmersión) -->
+        <div id="nav-content" class="max-w-[95%] mx-auto flex justify-between items-center relative z-10 text-white">
+            <div class="w-24 md:w-32">
+                <button
+                    class="cart-trigger flex items-center gap-2 text-xs uppercase tracking-widest hover-line hidden md:inline-flex cursor-trigger magnetic">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> Carrito
+                </button>
+            </div>
+
+            <div class="flex-shrink-0 flex justify-center items-center cursor-trigger magnetic">
+                <span class="font-serif text-2xl md:text-3xl font-bold tracking-wide">
+                    Don Gonzalo
+                </span>
+            </div>
+
+            <div class="w-24 md:w-32 flex justify-end">
+                <button id="open-menu-btn"
+                    class="magnetic cursor-trigger uppercase tracking-[0.15em] text-xs font-bold hover:opacity-80 transition-opacity flex items-center gap-3">
+                    <span class="hidden md:inline hover-line">Menú</span>
+                    <i data-lucide="align-right" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- La Casa Detalle Extendido -->
+    <section id="casa-detalle" class="pt-48 pb-32 px-6 bg-theme-bg min-h-screen relative overflow-hidden">
+        
+        <!-- Hero Casa -->
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-16 mb-24 reveal">
+            <div class="max-w-2xl text-left">
+                <span class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-6 block">Medellín, Colombia</span>
+                <h1 class="text-6xl md:text-8xl font-serif leading-[1.1] tracking-tight">El Refugio <br /><span class="italic text-gray-500">Sensorial.</span></h1>
+            </div>
+            <p class="font-light opacity-80 text-xl max-w-sm border-l-2 border-theme-accent pl-6 py-2 text-justify">
+                Diseñado como un santuario analógico. Cero wifi, cero distracciones. Venimos a hablar, observar y probar.
+            </p>
+        </div>
+
+        <!-- Galería Principal -->
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 mb-32 reveal reveal-delay-1">
+            <div class="md:col-span-8 h-[60vh] parallax-wrapper shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&q=80&w=1500" class="parallax-img js-parallax object-cover grayscale-[10%]" data-speed="0.12">
+            </div>
+            <div class="md:col-span-4 h-[60vh] parallax-wrapper shadow-2xl mt-12 md:mt-0">
+                <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&q=80&w=800" class="parallax-img js-parallax object-cover grayscale-[30%] hover:grayscale-0 transition-all duration-700" data-speed="0.18">
+            </div>
+        </div>
+
+        <!-- Info y Layout Interactivo -->
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 mb-32">
+            
+            <div class="reveal">
+                <h2 class="text-4xl font-serif mb-8 text-theme-text">Nuestra Barra Principal</h2>
+                <p class="font-light opacity-80 text-lg leading-relaxed mb-8">Nuestra barra de madera recuperada está sumergida deliberadamente en el centro del local para romper la barrera entre el barista y el comensal. No hay caja registradora de por medio; te sientas junto al escenario de preparación.</p>
+                <div class="grid grid-cols-2 gap-8 border-t border-theme-text/10 pt-8 mt-12">
+                    <div>
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-theme-accent mb-2">Horarios</h4>
+                        <ul class="space-y-2 opacity-70 text-sm font-light">
+                            <li>Lun - Vie: 07:00 a 19:00</li>
+                            <li>Sab: 08:00 a 20:00</li>
+                            <li>Dom: 09:00 a 14:00</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-theme-accent mb-2">Dirección</h4>
+                        <p class="opacity-70 text-sm font-light leading-relaxed">
+                            Cra. 43A #1-50<br>
+                            El Poblado<br>
+                            Medellín, Antioquia
+                        </p>
+                    </div>
+                </div>
+                <button class="mt-12 px-8 py-4 bg-theme-text text-theme-bg uppercase font-bold tracking-widest text-xs hover-line magnetic cursor-trigger">
+                    Reservar una Mesa
+                </button>
+            </div>
+
+            <!-- Mapa Minimalista / Abstracto -->
+            <div class="reveal reveal-delay-1 w-full aspect-square bg-[#E6E1D8] p-8 flex items-center justify-center relative shadow-xl js-tilt cursor-trigger">
+                <div class="w-full h-full border-2 border-theme-text/20 js-tilt-inner flex flex-col justify-between p-8 relative overflow-hidden">
+                    <i data-lucide="map" class="absolute -right-10 -bottom-10 w-64 h-64 opacity-5"></i>
+                    <div>
+                        <h3 class="text-2xl font-serif italic text-theme-accent mb-2">En el corazón verde.</h3>
+                        <p class="text-sm opacity-60">Fácil parqueo y bicicleteros disponibles.</p>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="w-16 h-16 rounded-full bg-theme-accent text-white flex items-center justify-center magnetic self-end shadow-xl hover:bg-theme-text transition-colors">
+                        <i data-lucide="navigation" class="w-6 h-6"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Footer Monumental -->
+    <footer id="contacto" class="pt-32 pb-8 px-6 bg-theme-text text-theme-bg overflow-hidden relative">
+        <div class="max-w-[95%] mx-auto relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32 reveal">
+                <div class="md:col-span-6">
+                    <h3 class="text-4xl md:text-7xl font-serif mb-8 leading-tight">¿Hablamos de <br /><span
+                            class="italic text-theme-accent">Café?</span></h3>
+                    <a href="mailto:hola@dongonzalo.com"
+                        class="text-2xl md:text-3xl font-light hover:text-theme-accent transition-colors hover-line cursor-trigger">hola@dongonzalo.com</a>
+                </div>
+
+                <div class="md:col-span-3">
+                    <h4 class="uppercase tracking-widest text-xs opacity-50 mb-4 font-bold text-theme-accent">Conecta</h4>
+                    <div class="flex flex-col space-y-4">
+                        <a href="#" class="text-xl font-light hover:text-theme-accent transition-colors cursor-trigger">Instagram</a>
+                        <a href="#" class="text-xl font-light hover:text-theme-accent transition-colors cursor-trigger">WhatsApp</a>
+                        <a href="#" class="text-xl font-light hover:text-theme-accent transition-colors cursor-trigger">Facebook</a>
+                    </div>
+                </div>
+
+                <div class="md:col-span-4 flex flex-col">
+                    <h4 class="uppercase tracking-widest text-xs opacity-50 mb-4 font-bold text-theme-accent">Únete a la Rebelión</h4>
+                    <p class="font-light opacity-60 text-sm mb-4">Noticias de tostiones frescas y ediciones limitadas.</p>
+                    <form class="flex border-b border-white/20 pb-2 hover-line relative w-full group">
+                        <input type="email" placeholder="tu@email.com" class="bg-transparent border-none outline-none w-full text-white placeholder-white/30 font-light cursor-trigger peer" required>
+                        <button type="submit" class="absolute right-0 text-theme-accent uppercase tracking-widest text-[10px] font-bold opacity-0 peer-focus:opacity-100 group-hover:opacity-100 transition-opacity cursor-trigger">
+                            Unir
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tipografía Inmensa de cierre -->
+            <div class="w-full text-center border-t border-white/10 pt-16 reveal pb-16">
+                <h1
+                    class="text-[15vw] leading-none font-serif font-bold text-white opacity-[0.05] pointer-events-none">
+                    DON GONZALO
+                </h1>
+            </div>
+
+            <div
+                class="flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest opacity-40 font-bold">
+                <div class="flex items-center gap-4 mb-4 md:mb-0">
+                    <span>© 2026 Don Gonzalo.</span>
+                </div>
+                <span>Tostado en la Montaña.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= LOGICA DE INMERSIÓN (Vanilla JS) ================= -->
+    <script>
+        // 1. Inicializar Iconos
+        lucide.createIcons();
+
+        // 2. Custom Cursor Logic (Solo en Desktop)
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        const triggers = document.querySelectorAll('.cursor-trigger, a, button');
+
+        let mouseX = 0, mouseY = 0;
+        let outlineX = 0, outlineY = 0;
+
+        if (window.matchMedia("(pointer: fine)").matches) {
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                // El punto sigue exacto
+                cursorDot.style.left = `${mouseX}px`;
+                cursorDot.style.top = `${mouseY}px`;
+            });
+
+            // Animación suave (Lerp) para el círculo exterior
+            const renderCursor = () => {
+                outlineX += (mouseX - outlineX) * 0.15;
+                outlineY += (mouseY - outlineY) * 0.15;
+                cursorOutline.style.left = `${outlineX}px`;
+                cursorOutline.style.top = `${outlineY}px`;
+                requestAnimationFrame(renderCursor);
+            };
+            requestAnimationFrame(renderCursor);
+
+            // Efecto Hover
+            triggers.forEach(trigger => {
+                trigger.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                trigger.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+        }
+
+        // 3. Botones Magnéticos
+        const magnetics = document.querySelectorAll('.magnetic');
+        magnetics.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = (e.clientX - rect.left - rect.width / 2) * 0.4;
+                const y = (e.clientY - rect.top - rect.height / 2) * 0.4;
+                btn.style.transform = `translate(${x}px, ${y}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = `translate(0px, 0px)`;
+            });
+        });
+
+        // 4. Efecto 3D Tilt para Productos
+        const tiltCards = document.querySelectorAll('.js-tilt');
+        tiltCards.forEach(card => {
+            const inner = card.querySelector('.js-tilt-inner');
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const multiplier = 20; // Intensidad del tilt
+                const xRotate = multiplier * ((x - rect.width / 2) / rect.width);
+                const yRotate = -multiplier * ((y - rect.height / 2) / rect.height);
+                inner.style.transform = `perspective(1000px) rotateX(${yRotate}deg) rotateY(${xRotate}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                inner.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+
+        // 5. Parallax Scroll y Navbar Dynamics
+        const navbar = document.getElementById('navbar');
+        const heroMedia = document.getElementById('hero-media');
+        const heroText = document.getElementById('hero-text');
+        const parallaxImages = document.querySelectorAll('.js-parallax');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+
+            // Hero Parallax (Escala el video hacia abajo y mueve el texto)
+            if (scrollY < window.innerHeight) {
+                heroMedia.style.transform = `translateY(${scrollY * 0.3}px) scale(${1 - scrollY * 0.0002})`;
+                heroText.style.transform = `translateY(${scrollY * 0.5}px)`;
+                heroText.style.opacity = 1 - scrollY / 500;
+            }
+
+            // Parallax para imágenes (Vertical translation)
+            parallaxImages.forEach(img => {
+                const speed = img.getAttribute('data-speed');
+                const rect = img.parentElement.getBoundingClientRect();
+                // Si la imagen está en pantalla
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const yPos = (rect.top - window.innerHeight / 2) * speed;
+                    img.style.transform = `translateY(${yPos}px)`;
+                }
+            });
+        });
+
+        // 6. Reveal Observer (Animaciones de entrada)
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Solo anima una vez
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // 7. Menú Overlay
+        const openMenuBtn = document.getElementById('open-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        function toggleMenu(show) {
+            if (show) {
+                menuOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                menuOverlay.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                menuOverlay.classList.add('opacity-0', 'pointer-events-none');
+                menuOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+            }
+        }
+        openMenuBtn.addEventListener('click', () => toggleMenu(true));
+        closeMenuBtn.addEventListener('click', () => toggleMenu(false));
+        menuLinks.forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+
+        // 8. Carrito Overlay
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartBackdrop = document.getElementById('cart-backdrop');
+        const cartTriggers = document.querySelectorAll('.cart-trigger');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+        const cartToShopBtn = document.getElementById('cart-to-shop-btn');
+
+        function toggleCart(show) {
+            if (show) {
+                cartDrawer.classList.remove('translate-x-full');
+                cartBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+                cartBackdrop.classList.add('opacity-100', 'pointer-events-auto');
+                document.body.style.overflow = 'hidden';
+            } else {
+                cartDrawer.classList.add('translate-x-full');
+                cartBackdrop.classList.remove('opacity-100', 'pointer-events-auto');
+                cartBackdrop.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = '';
+            }
+        }
+
+        cartTriggers.forEach(btn => btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleCart(true);
+        }));
+        if(closeCartBtn) closeCartBtn.addEventListener('click', () => toggleCart(false));
+        if(cartBackdrop) cartBackdrop.addEventListener('click', () => toggleCart(false));
+        if(cartToShopBtn) cartToShopBtn.addEventListener('click', () => {
+            toggleCart(false);
+            window.location.href = 'coleccion.html';
+        });
+    </script>
+</body>
+
+</html>
