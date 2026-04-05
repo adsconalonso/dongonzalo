@@ -42,9 +42,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* ================= INMERSIÓN VISUAL ================= */
+        /* ================= INMERSIÓN VISUAL MONUMENTAL ================= */
 
-        /* Textura de Grano Fotográfico */
+        /* Textura de Grano Fotográfico (Toque Analógico) */
         .noise-overlay {
             position: fixed;
             top: 0;
@@ -53,9 +53,67 @@
             height: 100vh;
             pointer-events: none;
             z-index: 9999;
-            opacity: 0.035;
+            opacity: 0.055; /* Aumentado para el toque solicitado */
             mix-blend-mode: multiply;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Máscara de Texto SVG para el Hero (Awwwards Style) */
+        .hero-mask-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 30;
+        }
+
+        .hero-mask-text {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 14vw;
+            line-height: 0.8;
+            fill: #F5F2ED; /* Color de fondo para la máscara */
+            background: #F5F2ED;
+            color: #1A1412;
+            mix-blend-mode: screen; /* Clave para el efecto de máscara sobre video */
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Estilos del Menú Fullscreen Interactivo */
+        .menu-bg-preview {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+            filter: brightness(0.4) grayscale(0.5);
+            transform: scale(1.1);
+        }
+
+        .menu-link:hover ~ .menu-bg-preview {
+            opacity: 0.3;
+            transform: scale(1);
+        }
+
+        /* Tipografía Editorial para Secciones */
+        .section-title-giant {
+            font-size: clamp(4rem, 15vw, 12rem);
+            line-height: 0.8;
+            letter-spacing: -0.04em;
         }
 
         /* Cursor Personalizado (Oculto en móviles) */
@@ -218,6 +276,36 @@
             height: 130%;
             object-fit: cover;
         }
+        /* Animación de Línea de Scroll */
+        @keyframes scroll-down {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .animate-scroll-line {
+            animation: scroll-down 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+        }
+
+        /* Layout Asimétrico Filosofía */
+        .grid-editorial {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+        }
+
+        /* Slider Horizontal Híbrido */
+        .horizontal-scroll-section {
+            overflow-x: auto;
+            display: flex;
+            gap: 4rem;
+            padding: 0 5vw;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+        .horizontal-scroll-section::-webkit-scrollbar { display: none; }
+        .horizontal-scroll-item {
+            flex: 0 0 80vw;
+            scroll-snap-align: center;
+        }
     </style>
 </head>
 
@@ -255,7 +343,13 @@
     <!-- Menú Fullscreen Overlay -->
     <div id="menu-overlay"
         class="fixed inset-0 z-[100] bg-theme-text text-theme-bg flex flex-col p-8 md:p-16 transition-all duration-700 ease-in-out opacity-0 pointer-events-none">
-        <div class="flex justify-between items-center w-full max-w-7xl mx-auto">
+        <!-- Previsualizaciones Dinámicas de Fondo -->
+        <div class="menu-bg-preview" id="bg-filosofia" style="background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=2000')"></div>
+        <div class="menu-bg-preview" id="bg-proceso" style="background-image: url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=2000')"></div>
+        <div class="menu-bg-preview" id="bg-coleccion" style="background-image: url('https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&q=80&w=2000')"></div>
+        <div class="menu-bg-preview" id="bg-casa" style="background-image: url('https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&q=80&w=2000')"></div>
+
+        <div class="flex justify-between items-center w-full max-w-7xl mx-auto relative z-20">
             <span class="font-serif text-2xl tracking-wide text-theme-accent">Don Gonzalo</span>
             <button id="close-menu-btn"
                 class="magnetic hover:opacity-60 transition-opacity flex items-center gap-4 uppercase text-xs tracking-widest cursor-trigger">
@@ -264,21 +358,17 @@
         </div>
         <div class="flex flex-col justify-center h-full max-w-7xl mx-auto w-full space-y-4 md:space-y-6 relative z-10">
             <span class="text-xs uppercase tracking-widest opacity-50 mb-8 block ml-2">Explorar la Marca</span>
-            <a href="filosofia.html"
+            <a href="filosofia.html" data-bg="bg-filosofia"
                 class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">La
                 Filosofía</a>
-            <a href="proceso.html"
+            <a href="proceso.html" data-bg="bg-proceso"
                 class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">El
                 Proceso</a>
-            <a href="coleccion.html"
+            <a href="coleccion.html" data-bg="bg-coleccion"
                 class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">Colección</a>
-            <a href="casa.html"
+            <a href="casa.html" data-bg="bg-casa"
                 class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6">Nuestra
                 Casa</a>
-        </div>
-        <!-- Elemento de fondo gigante en el menú -->
-        <div class="absolute -bottom-20 -right-20 opacity-5 pointer-events-none z-0">
-            <i data-lucide="coffee" class="w-[800px] h-[800px]"></i>
         </div>
     </div>
 
@@ -309,40 +399,36 @@
         </div>
     </nav>
 
-    <!-- Hero Inmersivo Monumental -->
-    <section id="hero" class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
-        <!-- Contenedor del video con efecto Parallax en el scroll -->
-        <div id="hero-media" class="absolute inset-0 w-full h-full origin-center">
-            <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=2000"
-                alt="Fondo de Café" class="absolute inset-0 w-full h-full object-cover scale-105" />
-            <video autoplay loop muted playsinline
-                poster="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=2000"
-                class="absolute inset-0 w-full h-full object-cover scale-105 z-10 opacity-70">
-                <source src="https://cdn.coverr.co/videos/coverr-coffee-beans-in-a-roaster-5231/1080p.mp4"
-                    type="video/mp4" />
-            </video>
-            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-theme-bg z-20"></div>
-        </div>
+    <!-- Hero Inmersivo Monumental con Máscara -->
+    <section id="hero" class="relative h-[150vh] w-full flex items-start justify-center overflow-hidden bg-theme-bg">
+        <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+            <!-- Contenedor del video -->
+            <div id="hero-media" class="absolute inset-0 w-full h-full">
+                <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+                    <source src="https://cdn.coverr.co/videos/coverr-coffee-beans-in-a-roaster-5231/1080p.mp4" type="video/mp4" />
+                </video>
+            </div>
 
-        <div class="relative z-30 w-full px-6 flex flex-col items-center mt-20" id="hero-text">
-            <span class="uppercase tracking-[0.4em] text-xs md:text-sm mb-8 block text-[#D4A373] font-bold reveal">
-                Origen Andino
-            </span>
-            <!-- Tipografía Inmensa (Fuerza visual) -->
-            <h1
-                class="text-[14vw] md:text-[11vw] leading-[0.8] font-serif font-bold text-white text-center reveal reveal-delay-1 tracking-tighter mix-blend-overlay">
-                EL ARTE DEL <br />
-                <span class="italic font-light text-white/90">BUEN CAFÉ</span>
-            </h1>
-        </div>
+            <!-- Capa de Máscara de Texto SVG -->
+            <div class="hero-mask-container">
+                <div class="hero-mask-text" id="hero-mask">
+                    DON GONZALO
+                </div>
+            </div>
 
-        <!-- Botón de bajar magnético -->
-        <div
-            class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center reveal reveal-delay-3 z-30 cursor-trigger magnetic">
-            <a href="filosofia.html"
-                class="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors duration-500">
-                <i data-lucide="arrow-down" class="w-6 h-6"></i>
-            </a>
+            <!-- Texto Complementario Inmersivo -->
+            <div class="absolute bottom-20 left-10 md:left-20 z-40 max-w-sm reveal reveal-delay-2">
+                <p class="text-xs uppercase tracking-[0.3em] font-bold text-theme-accent mb-4">Est. 2026</p>
+                <p class="text-lg md:text-xl font-light leading-relaxed">Tostión artesanal en el corazón de los Andes. Un viaje sensorial en cada taza.</p>
+            </div>
+            
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-40 reveal reveal-delay-3">
+                <div class="flex flex-col items-center gap-4">
+                    <div class="w-[1px] h-20 bg-theme-text/20 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-full bg-theme-accent animate-scroll-line"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -355,65 +441,140 @@
         </div>
     </div>
 
-    <!-- Filosofía Teaser -->
-    <section id="la-filosofía" class="py-32 md:py-40 px-6 relative bg-theme-bg overflow-hidden border-b border-theme-text/10">
-        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-16">
-            <div class="w-full md:w-1/2 parallax-wrapper h-[50vh] reveal shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1611162458324-aae1eb4129a4?auto=format&fit=crop&q=80&w=1000" class="parallax-img js-parallax object-cover" data-speed="0.1">
+    <!-- Filosofía Monumental (Regreso al formato largo) -->
+    <section id="filosofia" class="py-32 md:py-60 px-6 relative bg-theme-bg overflow-hidden">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-7 order-2 md:order-1">
+                <div class="reveal">
+                    <span class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-8 block">01 — Origen</span>
+                    <h2 class="section-title-giant font-serif mb-12">EL ALMA DE EL <br><span class="italic font-light text-theme-text/40">TOSTADO.</span></h2>
+                    <p class="text-xl md:text-2xl font-light leading-relaxed mb-12 max-w-xl">No solo vendemos café; preservamos una herencia. Cada grano de Don Gonzalo es un testimonio del respeto por la tierra y por quienes la trabajan.</p>
+                    <a href="filosofia.html" class="inline-flex items-center gap-6 group cursor-trigger">
+                        <span class="w-16 h-16 rounded-full border border-theme-text/20 flex items-center justify-center group-hover:bg-theme-text group-hover:text-theme-bg transition-all duration-500">
+                            <i data-lucide="plus" class="w-6 h-6"></i>
+                        </span>
+                        <span class="uppercase text-xs font-bold tracking-widest hover-line">Nuestro Manifiesto Completo</span>
+                    </a>
+                </div>
             </div>
-            <div class="w-full md:w-1/2 reveal reveal-delay-1 text-center md:text-left">
-                <span class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-6 block">Nuestra Historia</span>
-                <h2 class="text-5xl md:text-6xl font-serif mb-8">El arte del <br><span class="italic font-light text-theme-text/60">buen origen.</span></h2>
-                <a href="filosofia.html" class="inline-flex items-center gap-4 uppercase tracking-widest text-xs font-bold hover-line cursor-trigger">
-                    Nuestro Manifiesto <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
+            <div class="md:col-span-5 order-1 md:order-2">
+                <div class="parallax-wrapper h-[70vh] reveal reveal-delay-1 shadow-2xl skew-y-3">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=1000" class="parallax-img js-parallax" data-speed="0.1">
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Proceso Teaser -->
-    <section class="py-32 md:py-40 px-6 relative bg-theme-text text-theme-bg overflow-hidden">
-        <div class="max-w-4xl mx-auto text-center reveal">
-            <span class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-6 block">Nuestro Método</span>
-            <h2 class="text-5xl md:text-6xl font-serif mb-8">Ciencia y <br><span class="italic font-light opacity-60">Sentimiento</span></h2>
-            <p class="font-light opacity-70 mb-12 max-w-xl mx-auto text-lg hover:text-white transition-colors">Del cafetal a la taza, cada paso está diseñado para respetar la complejidad natural del grano.</p>
-            <a href="proceso.html" class="inline-flex items-center gap-4 uppercase tracking-[0.2em] text-xs font-bold hover-line cursor-trigger text-white">
-                Ver Documental <i data-lucide="arrow-right" class="w-4 h-4"></i>
+    <!-- Proceso Horizontal Híbrido -->
+    <section id="proceso" class="py-32 md:py-60 bg-theme-text text-theme-bg overflow-hidden">
+        <div class="px-6 md:px-20 mb-20 flex justify-between items-end reveal">
+            <div>
+                <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent mb-4 block">02 — Método</span>
+                <h2 class="text-5xl md:text-7xl font-serif">Artesanía de <br><span class="italic font-light opacity-40">Precisión</span></h2>
+            </div>
+            <div class="hidden md:block max-w-xs text-sm font-light opacity-60">
+                Un ciclo perfecto de temperatura y tiempo diseñado para liberar el perfil oculto de cada región.
+            </div>
+        </div>
+
+        <div class="horizontal-scroll-section hide-scrollbar">
+            <div class="horizontal-scroll-item reveal reveal-delay-1">
+                <div class="aspect-[16/9] bg-white/5 p-12 flex flex-col justify-between group cursor-trigger">
+                    <span class="text-6xl font-serif opacity-10 group-hover:opacity-40 group-hover:text-theme-accent transition-all duration-700">01</span>
+                    <div>
+                        <h3 class="text-3xl font-serif mb-4 italic">Cosecha Selectiva</h3>
+                        <p class="text-sm font-light opacity-60 max-w-sm">Solo los cerezos en su punto óptimo de madurez entran en nuestra selección.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="horizontal-scroll-item reveal reveal-delay-2">
+                <div class="aspect-[16/9] bg-white/5 p-12 flex flex-col justify-between group cursor-trigger">
+                    <span class="text-6xl font-serif opacity-10 group-hover:opacity-40 group-hover:text-theme-accent transition-all duration-700">02</span>
+                    <div>
+                        <h3 class="text-3xl font-serif mb-4 italic">La Curva de Tueste</h3>
+                        <p class="text-sm font-light opacity-60 max-w-sm">Perfiles personalizados que resaltan la acidez brillante y el cuerpo sedoso.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="horizontal-scroll-item reveal reveal-delay-3">
+                <div class="aspect-[16/9] bg-white/5 p-12 flex flex-col justify-between group cursor-trigger">
+                    <span class="text-6xl font-serif opacity-10 group-hover:opacity-40 group-hover:text-theme-accent transition-all duration-700">03</span>
+                    <div>
+                        <h3 class="text-3xl font-serif mb-4 italic">Catación Técnica</h3>
+                        <p class="text-sm font-light opacity-60 max-w-sm">Cada lote es validado por nuestros maestros catadores antes del empaque.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-20 text-center reveal">
+            <a href="proceso.html" class="inline-flex items-center gap-4 uppercase tracking-[0.3em] text-[10px] font-bold hover:text-theme-accent transition-colors cursor-trigger">
+                Ver Documental de Tostión <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
         </div>
     </section>
 
-    <!-- Colección Teaser -->
-    <section class="py-32 md:py-40 px-6 relative bg-theme-surface overflow-hidden border-b border-theme-text/10">
-        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-16">
-            <div class="w-full md:w-1/2 reveal order-2 md:order-1 text-center md:text-right">
-                <span class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-6 block">Catálogo</span>
-                <h2 class="text-5xl md:text-6xl font-serif mb-8">Tostión fresca <br><span class="italic font-light text-theme-text/60">bajo demanda.</span></h2>
-                <a href="coleccion.html" class="inline-flex items-center gap-4 uppercase tracking-widest text-xs font-bold hover-line cursor-trigger">
-                    Explorar la Tienda <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-            </div>
-            <div class="w-full md:w-1/2 h-[50vh] flex items-center justify-center p-12 bg-[#DFD8CC] relative js-tilt cursor-trigger reveal reveal-delay-1 order-1 md:order-2 shadow-xl">
-                <div class="w-[60%] h-[90%] bg-theme-text shadow-2xl relative transition-transform duration-700 flex flex-col justify-between p-8 border-b-8 border-theme-accent js-tilt-inner">
-                    <i data-lucide="coffee" class="w-16 h-16 mx-auto text-white opacity-80 mb-4 block"></i>
-                    <div class="text-center text-white">
-                        <p class="font-serif text-3xl italic text-[#D4A373]">Amanecer</p>
+    <!-- Colección con Efecto 3D Dinámico -->
+    <section id="coleccion" class="py-32 md:py-60 px-6 bg-theme-surface border-b border-theme-text/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+                <div class="reveal">
+                    <span class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-8 block">03 — Catálogo</span>
+                    <h2 class="text-6xl md:text-8xl font-serif leading-none mb-12">CURURÍA <br><span class="italic font-light text-theme-text/40">LIMITADA.</span></h2>
+                    <p class="text-lg font-light opacity-70 mb-12 max-w-md">Nuestras variedades cambian con las estaciones. Solo traemos lo mejor de cada cosecha en su momento pico.</p>
+                    <a href="coleccion.html" class="px-12 py-5 border border-theme-text text-theme-text uppercase text-[10px] font-bold tracking-[0.3em] hover:bg-theme-text hover:text-theme-bg transition-all duration-500 magnetic cursor-trigger">
+                        Explorar la Tienda
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-4 pt-20">
+                        <div class="aspect-[3/4] bg-theme-bg p-8 js-tilt reveal reveal-delay-1 cursor-trigger shadow-lg">
+                            <div class="js-tilt-inner h-full flex flex-col justify-between">
+                                <div class="w-full h-1/2 bg-theme-text/5 rounded-full blur-3xl absolute -z-10"></div>
+                                <div class="text-center">
+                                    <span class="text-[10px] uppercase tracking-widest font-bold opacity-30">Amanecer</span>
+                                    <h3 class="font-serif italic text-2xl mt-2">Cítrico & Miel</h3>
+                                </div>
+                                <div class="flex justify-between items-end">
+                                    <span class="text-sm font-bold">$24.900</span>
+                                    <i data-lucide="plus" class="w-5 h-5"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="aspect-[3/4] bg-theme-text text-theme-bg p-8 js-tilt reveal reveal-delay-2 cursor-trigger shadow-2xl">
+                            <div class="js-tilt-inner h-full flex flex-col justify-between">
+                                <div class="text-center">
+                                    <span class="text-[10px] uppercase tracking-widest font-bold text-theme-accent">Ocaso</span>
+                                    <h3 class="font-serif italic text-2xl mt-2">Chocolate & Nuez</h3>
+                                </div>
+                                <div class="flex justify-between items-end">
+                                    <span class="text-sm font-bold text-white">$28.900</span>
+                                    <i data-lucide="shopping-bag" class="w-5 h-5 text-theme-accent"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Nuestra Casa Teaser -->
-    <section class="py-32 md:py-40 px-6 relative bg-theme-bg overflow-hidden">
-        <div class="max-w-4xl mx-auto text-center reveal">
-            <span class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-6 block">Medellín, Colombia</span>
-            <h2 class="text-5xl md:text-6xl font-serif mb-8">Experiencia <br><span class="italic font-light opacity-60">Sensorial</span></h2>
-            <div class="w-full h-[40vh] parallax-wrapper mb-12 shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&q=80&w=1000" class="parallax-img js-parallax object-cover grayscale-[20%]" data-speed="0.12">
-            </div>
-            <a href="casa.html" class="inline-flex items-center gap-4 uppercase tracking-[0.2em] text-xs font-bold hover-line cursor-trigger text-theme-text">
-                Visitar el Refugio <i data-lucide="arrow-right" class="w-4 h-4"></i>
+    <!-- Nuestra Casa (Espacio Físico) -->
+    <section id="casa" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 w-full h-full js-parallax" data-speed="0.15">
+            <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover grayscale-[30%] brightness-50">
+        </div>
+        <div class="relative z-10 text-center text-white px-6 reveal">
+            <span class="uppercase tracking-[0.5em] text-[10px] font-bold text-theme-accent mb-8 block">04 — Medellín</span>
+            <h2 class="text-6xl md:text-9xl font-serif mb-12">EL <br><span class="italic font-light text-white/50">REFUGIO.</span></h2>
+            <a href="casa.html" class="inline-flex items-center gap-6 group cursor-trigger">
+                <span class="w-20 h-20 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-700">
+                    <i data-lucide="map-pin" class="w-8 h-8"></i>
+                </span>
+                <span class="uppercase text-[10px] font-bold tracking-[0.4em] hover-line">Ubicación y Horarios</span>
             </a>
         </div>
     </section>
@@ -538,32 +699,41 @@
             });
         });
 
-        // 5. Parallax Scroll y Navbar Dynamics
+        // 5. Parallax Scroll y Navbar Dynamics (Actualizado para Hero Mask)
         const navbar = document.getElementById('navbar');
         const heroMedia = document.getElementById('hero-media');
-        const heroText = document.getElementById('hero-text');
+        const heroMask = document.getElementById('hero-mask');
         const parallaxImages = document.querySelectorAll('.js-parallax');
 
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
 
-            // Hero Parallax (Escala el video hacia abajo y mueve el texto)
-            if (scrollY < window.innerHeight) {
-                heroMedia.style.transform = `translateY(${scrollY * 0.3}px) scale(${1 - scrollY * 0.0002})`;
-                heroText.style.transform = `translateY(${scrollY * 0.5}px)`;
-                heroText.style.opacity = 1 - scrollY / 500;
+            // Hero Mask Scale Effect
+            if (scrollY < window.innerHeight * 1.5) {
+                const scale = 1 + (scrollY / 100);
+                heroMask.style.transform = `scale(${scale})`;
+                heroMedia.style.transform = `scale(${1 + scrollY * 0.0005})`;
             }
 
             // Parallax para imágenes (Vertical translation)
             parallaxImages.forEach(img => {
-                const speed = img.getAttribute('data-speed');
+                const speed = img.parentElement.getAttribute('data-speed') || 0.1;
                 const rect = img.parentElement.getBoundingClientRect();
-                // Si la imagen está en pantalla
                 if (rect.top < window.innerHeight && rect.bottom > 0) {
                     const yPos = (rect.top - window.innerHeight / 2) * speed;
                     img.style.transform = `translateY(${yPos}px)`;
                 }
             });
+
+            // Navbar Background
+            if (scrollY > 100) {
+                navbar.classList.remove('py-8');
+                navbar.classList.add('py-4', 'bg-theme-bg/80', 'backdrop-blur-md', 'text-theme-text');
+                navbar.classList.remove('mix-blend-difference');
+            } else {
+                navbar.classList.add('py-8', 'mix-blend-difference');
+                navbar.classList.remove('py-4', 'bg-theme-bg/80', 'backdrop-blur-md', 'text-theme-text');
+            }
         });
 
         // 6. Reveal Observer (Animaciones de entrada)
@@ -572,17 +742,18 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target); // Solo anima una vez
+                    observer.unobserve(entry.target); 
                 }
             });
         }, observerOptions);
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // 7. Menú Overlay
+        // 7. Menú Overlay con Previsualización
         const openMenuBtn = document.getElementById('open-menu-btn');
         const closeMenuBtn = document.getElementById('close-menu-btn');
         const menuOverlay = document.getElementById('menu-overlay');
         const menuLinks = document.querySelectorAll('.menu-link');
+        const menuPreviews = document.querySelectorAll('.menu-bg-preview');
 
         function toggleMenu(show) {
             if (show) {
@@ -595,7 +766,19 @@
         }
         openMenuBtn.addEventListener('click', () => toggleMenu(true));
         closeMenuBtn.addEventListener('click', () => toggleMenu(false));
-        menuLinks.forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+        
+        menuLinks.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                const bgId = link.getAttribute('data-bg');
+                menuPreviews.forEach(p => p.classList.add('opacity-0'));
+                document.getElementById(bgId).classList.remove('opacity-0');
+                document.getElementById(bgId).classList.add('opacity-30');
+            });
+            link.addEventListener('mouseleave', () => {
+                menuPreviews.forEach(p => p.classList.add('opacity-0'));
+            });
+            link.addEventListener('click', () => toggleMenu(false));
+        });
 
         // 8. Carrito Overlay
         const cartDrawer = document.getElementById('cart-drawer');
