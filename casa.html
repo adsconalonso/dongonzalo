@@ -15,6 +15,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Configuración del tema -->
+    <style>
+        #navbar.navbar-scrolled {
+            background-color: rgba(245, 242, 237, 0.98) !important; /* Almost solid for Max contrast */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(26, 20, 18, 0.08);
+            mix-blend-mode: normal !important;
+        }
+    </style>
     <script>
         tailwind.config = {
             theme: {
@@ -84,7 +92,7 @@
         </div>
         <div class="flex flex-col justify-center h-full max-w-7xl mx-auto w-full space-y-4 md:space-y-6 relative z-10">
             <span class="text-xs uppercase tracking-widest opacity-50 mb-8 block ml-2">Explorar la Marca</span>
-            <a href="index.html" class="menu-link cursor-trigger text-4xl md:text-[4vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6" data-i18n="nav-home">Inicio</a>
+            <a href="index.html" class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6" data-i18n="nav-home">Inicio</a>
             <a href="filosofia.html" data-bg="bg-filosofia" class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6" data-i18n="nav-philosophy">La Filosofía</a>
             <a href="proceso.html" data-bg="bg-proceso" class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6" data-i18n="nav-process">El Proceso</a>
             <a href="coleccion.html" data-bg="bg-coleccion" class="menu-link cursor-trigger text-6xl md:text-[8vw] leading-none font-serif hover:italic transition-all duration-500 hover:text-theme-accent hover:translate-x-6" data-i18n="nav-collection">Colección</a>
@@ -152,6 +160,32 @@
                 <div>
                     <h3 class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-4" data-i18n="casa-experience-title">La Experiencia</h3>
                     <p class="text-xl font-light opacity-80 leading-relaxed text-justify" data-i18n="casa-experience-p">Ven a probar nuestras ediciones limitadas, participa en talleres de catación o simplemente disfruta de un espacio diseñado para la pausa creativa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería Editorial Edición Refugio -->
+    <section class="py-32 bg-theme-text text-theme-bg overflow-hidden">
+        <div class="px-6 md:px-20 mb-20 reveal">
+            <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent mb-4 block">Espacios</span>
+            <h2 class="text-5xl md:text-7xl font-serif">Galería <br><span class="italic font-light opacity-40">Refugio.</span></h2>
+        </div>
+        
+        <div class="horizontal-scroll-section hide-scrollbar">
+            <div class="horizontal-scroll-item reveal reveal-delay-1">
+                <div class="aspect-[4/5] md:aspect-video bg-white/5 overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=1200" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <div class="horizontal-scroll-item reveal reveal-delay-2">
+                <div class="aspect-[4/5] md:aspect-video bg-white/5 overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=1200" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <div class="horizontal-scroll-item reveal reveal-delay-3">
+                <div class="aspect-[4/5] md:aspect-video bg-white/5 overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&q=80&w=1200" class="w-full h-full object-cover">
                 </div>
             </div>
         </div>

@@ -175,13 +175,15 @@ body.no-scroll {
 }
 
 /* 9. Navbar Scrolled State (Reliable Visibility) */
-#navbar.navbar-scrolled #nav-content {
+#navbar.navbar-scrolled #nav-content,
+#navbar.navbar-scrolled #nav-content * {
     color: var(--theme-text) !important;
 }
 
 #navbar.navbar-scrolled {
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
-    border-bottom: 1px solid rgba(26, 20, 18, 0.05);
+    background-color: rgba(245, 242, 237, 0.98) !important; /* Almost solid for Max contrast */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(26, 20, 18, 0.08);
 }
 
 @media (max-width: 768px) {
