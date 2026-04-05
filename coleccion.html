@@ -136,29 +136,8 @@
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
                 
-                <!-- Sidebar Filtros Bold -->
-                <div class="md:col-span-3 sticky top-32 space-y-20 reveal">
-                    <div>
-                        <h3 class="uppercase tracking-widest text-xs font-bold text-theme-accent mb-8">Variedad</h3>
-                        <div class="space-y-4">
-                            <label class="flex items-center gap-3 group cursor-trigger">
-                                <input type="checkbox" class="w-4 h-4 rounded-full border-theme-text accent-theme-accent">
-                                <span class="text-lg font-light group-hover:italic transition-all">Arábica</span>
-                            </label>
-                            <label class="flex items-center gap-3 group cursor-trigger">
-                                <input type="checkbox" class="w-4 h-4 rounded-full border-theme-text accent-theme-accent">
-                                <span class="text-lg font-light group-hover:italic transition-all">Caturra</span>
-                            </label>
-                            <label class="flex items-center gap-3 group cursor-trigger">
-                                <input type="checkbox" class="w-4 h-4 rounded-full border-theme-text accent-theme-accent" checked>
-                                <span class="text-lg font-light group-hover:italic transition-all">Geisha</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product Grid -->
-                <div class="md:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-24">
+                <!-- Product Grid Expanded (No Filters) -->
+                <div class="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-24">
                     
                     <!-- Producto 1 -->
                     <div class="flex flex-col group reveal">
@@ -190,7 +169,50 @@
                         <a href="producto.html" class="mt-8 uppercase tracking-[0.3em] text-[10px] font-bold border-b border-theme-text/20 pb-2 w-max hover:border-theme-accent transition-colors cursor-trigger" data-i18n="coll-view-details">Ver Detalles</a>
                     </div>
 
-                </div>
+                    <!-- Producto 3 -->
+                    <div class="flex flex-col group reveal reveal-delay-2">
+                        <div class="aspect-[3/4] bg-theme-surface mb-8 overflow-hidden js-tilt shadow-lg cursor-trigger">
+                            <img src="https://images.unsplash.com/photo-1580915411954-282cb1b0d780?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent">Cumbre — Sierra Nevada</span>
+                                <h3 class="text-3xl font-serif mt-2 italic group-hover:text-theme-accent transition-colors">Frutos Rojos</h3>
+                            </div>
+                            <span class="text-xl font-bold">$32.900</span>
+                        </div>
+                        <a href="producto.html" class="mt-8 uppercase tracking-[0.3em] text-[10px] font-bold border-b border-theme-text/20 pb-2 w-max hover:border-theme-accent transition-colors cursor-trigger">Ver Detalles</a>
+                    </div>
+
+                    <!-- Producto 4 -->
+                    <div class="flex flex-col group reveal">
+                        <div class="aspect-[3/4] bg-theme-surface mb-8 overflow-hidden js-tilt shadow-lg cursor-trigger">
+                            <img src="https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent">Mística — Nariño</span>
+                                <h3 class="text-3xl font-serif mt-2 italic group-hover:text-theme-accent transition-colors">Caramelo & Vainilla</h3>
+                            </div>
+                            <span class="text-xl font-bold">$26.900</span>
+                        </div>
+                        <a href="producto.html" class="mt-8 uppercase tracking-[0.3em] text-[10px] font-bold border-b border-theme-text/20 pb-2 w-max hover:border-theme-accent transition-colors cursor-trigger">Ver Detalles</a>
+                    </div>
+
+                    <!-- Producto 5 -->
+                    <div class="flex flex-col group reveal reveal-delay-1">
+                        <div class="aspect-[3/4] bg-theme-surface mb-8 overflow-hidden js-tilt shadow-lg cursor-trigger">
+                            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="uppercase tracking-widest text-[10px] font-bold text-theme-accent">Origen — Tolima</span>
+                                <h3 class="text-3xl font-serif mt-2 italic group-hover:text-theme-accent transition-colors">Panela & Limón</h3>
+                            </div>
+                            <span class="text-xl font-bold">$22.900</span>
+                        </div>
+                        <a href="producto.html" class="mt-8 uppercase tracking-[0.3em] text-[10px] font-bold border-b border-theme-text/20 pb-2 w-max hover:border-theme-accent transition-colors cursor-trigger">Ver Detalles</a>
+                    </div>
             </div>
         </div>
     </section>
