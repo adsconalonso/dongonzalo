@@ -258,6 +258,27 @@ body.no-scroll {
 #cart-drawer { z-index: 200 !important; }
 #cart-backdrop { z-index: 150 !important; }
 
+/* 13. Marquee System */
+.marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    user-select: none;
+}
+
+.marquee-content {
+    display: inline-block;
+    flex-shrink: 0;
+    min-width: 100%;
+    animation: marquee 40s linear infinite;
+    will-change: transform;
+}
+
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+}
+
 @media (max-width: 768px) {
     .section-title-giant {
         font-size: 14vw;
