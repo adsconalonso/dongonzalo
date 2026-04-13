@@ -321,6 +321,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 4. Parallax Scroll & Navbar Dynamics (Optimized for 120Hz/Mobile)
+    const navbar = document.getElementById('navbar');
+    const heroMedia = document.getElementById('hero-media');
+    const heroMask = document.getElementById('hero-mask');
+    const parallaxImages = document.querySelectorAll('.js-parallax');
+
     let lastScrollY = window.scrollY;
     let ticking = false;
 
