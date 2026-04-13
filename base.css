@@ -229,25 +229,24 @@ body.no-scroll {
 .horizontal-scroll-section {
     overflow-x: auto;
     display: flex;
-    gap: 4rem;
+    gap: 2rem; /* Reducido un poco para mayor densidad visual */
     padding: 0 5vw;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity; /* Menos agresivo que mandatory */
     scrollbar-width: none;
-    touch-action: pan-y; /* Permite scroll vertical fluido incluso tocando el carrusel */
-    scroll-behavior: smooth;
+    touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
 }
 
 .horizontal-scroll-section::-webkit-scrollbar { display: none; }
 
 .horizontal-scroll-item {
-    flex: 0 0 85vw;
-    scroll-snap-align: center;
+    flex: 0 0 80vw;
+    scroll-snap-align: start; /* Alineación al inicio para flujo más natural */
 }
 
 @media (min-width: 768px) {
     .horizontal-scroll-item {
-        flex: 0 0 45vw; /* Dos ítems visibles parcialmente en desktop */
+        flex: 0 0 40vw; 
     }
 }
 
