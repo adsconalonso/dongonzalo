@@ -8,6 +8,8 @@
 
 let cart = JSON.parse(localStorage.getItem('dg_cart')) || [];
 const WOMPI_PUBLIC_KEY = 'pub_prod_SBFnKY3HA8hAMK78beivLZWtdmcKGAEt';
+const SHIPPING_FEE = 16000;
+const FREE_SHIPPING_THRESHOLD = 150000;
 
 function saveCart() {
     localStorage.setItem('dg_cart', JSON.stringify(cart));
@@ -48,8 +50,18 @@ function updateQuantity(id, delta) {
     }
 }
 
-function getCartTotal() {
+function getCartSubtotal() {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+}
+
+function getShippingCost() {
+    const subtotal = getCartSubtotal();
+    if (subtotal === 0 || subtotal >= FREE_SHIPPING_THRESHOLD) return 0;
+    return SHIPPING_FEE;
+}
+
+function getCartTotal() {
+    return getCartSubtotal() + getShippingCost();
 }
 
 function updateCartBadge() {
@@ -118,7 +130,21 @@ function loadCartDrawer() {
                 </div>
             </div>
             <div id="cart-footer" class="p-8 bg-[#F5F2ED] border-t border-[#1A1412]/5 space-y-6">
-                <div class="flex justify-between items-end"><span class="uppercase tracking-widest text-[10px] font-bold opacity-40" data-i18n="cart-total-label">Total Estimado</span><span id="cart-total" class="text-3xl font-serif italic">$0</span></div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-xs opacity-60">
+                        <span data-i18n="cart-subtotal">Subtotal</span>
+                        <span id="cart-subtotal">$0</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs opacity-60">
+                        <span data-i18n="cart-shipping-cost">Envío</span>
+                        <span id="cart-shipping">$0</span>
+                    </div>
+                    <div id="free-shipping-teaser" class="text-[10px] text-theme-accent font-bold italic pt-2"></div>
+                    <div class="flex justify-between items-end pt-4 border-t border-theme-text/5">
+                        <span class="uppercase tracking-widest text-[10px] font-bold opacity-40" data-i18n="cart-total-label">Total</span>
+                        <span id="cart-total" class="text-3xl font-serif italic">$0</span>
+                    </div>
+                </div>
                 <button id="checkout-btn" class="w-full py-6 bg-[#1A1412] text-[#F5F2ED] uppercase tracking-widest font-bold text-xs hover:bg-[#8C4A23] transition-all duration-500 shadow-xl flex items-center justify-center gap-4 cursor-trigger group">
                     <span data-i18n="cart-pay">Finalizar y Pagar</span> <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-2 transition-transform"></i>
                 </button>
@@ -178,7 +204,24 @@ function renderCart() {
         `).join('');
         
         if (totalElement) {
-            totalElement.textContent = `$${getCartTotal().toLocaleString()}`;
+            const subtotal = getCartSubtotal();
+            const shipping = getShippingCost();
+            const total = getCartTotal();
+
+            document.getElementById('cart-subtotal').textContent = `$${subtotal.toLocaleString()}`;
+            document.getElementById('cart-shipping').textContent = shipping === 0 ? (subtotal > 0 ? 'Gratis' : '$0') : `$${shipping.toLocaleString()}`;
+            totalElement.textContent = `$${total.toLocaleString()}`;
+
+            const teaser = document.getElementById('free-shipping-teaser');
+            if (teaser) {
+                if (subtotal > 0 && subtotal < FREE_SHIPPING_THRESHOLD) {
+                    const missing = FREE_SHIPPING_THRESHOLD - subtotal;
+                    teaser.textContent = `¡Faltan $${missing.toLocaleString()} para envío GRATIS!`;
+                    teaser.classList.remove('hidden');
+                } else {
+                    teaser.classList.add('hidden');
+                }
+            }
         }
         
         // Re-init lucide icons for dynamic content
@@ -236,7 +279,11 @@ function initWompiCheckout() {
 }
 
 function sendOrderNotification(shipping, items, ref) {
-    const message = `Nuevo Pedido #${ref}\n\nCliente: ${shipping.name}\nDirección: ${shipping.address}\nCiudad: ${shipping.city}\nTel: ${shipping.phone}\n\nDetalle:\n${items.map(i => `- ${i.name} x${i.quantity}`).join('\n')}\n\nTotal: $${getCartTotal().toLocaleString()}`;
+    const subtotal = getCartSubtotal();
+    const shippingCost = getShippingCost();
+    const total = getCartTotal();
+
+    const message = `Nuevo Pedido #${ref}\n\nCliente: ${shipping.name}\nDirección: ${shipping.address}\nCiudad: ${shipping.city}\nTel: ${shipping.phone}\n\nDetalle:\n${items.map(i => `- ${i.name} x${i.quantity}`).join('\n')}\n\nSubtotal: $${subtotal.toLocaleString()}\nEnvío: ${shippingCost === 0 ? 'GRATIS' : '$' + shippingCost.toLocaleString()}\nTotal: $${total.toLocaleString()}`;
     
     // WhatsApp redirect
     const waUrl = `https://wa.me/573000000000?text=${encodeURIComponent(message)}`;
@@ -259,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 'edicion-selecta-antioquia',
             name: { es: 'Selecta', en: 'Select' },
             fullName: { es: 'Edición Selecta — Antioquia', en: 'Select Edition — Antioquia' },
-            price: 24900,
+            price: 54000,
             image: 'fotos productos/DSC07203.jpg',
             origin: { es: 'Urrao, Antioquia', en: 'Urrao, Antioquia' },
             altitude: '1.950 MSNM',
@@ -275,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 'edicion-gourmet-narino',
             name: { es: 'Gourmet', en: 'Gourmet' },
             fullName: { es: 'Edición Gourmet — Nariño', en: 'Gourmet Edition — Nariño' },
-            price: 26900,
+            price: 54000,
             image: 'fotos productos/DSC07212.jpg',
             origin: { es: 'Sandoná, Nariño', en: 'Sandoná, Nariño' },
             altitude: '2.100 MSNM',
@@ -291,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 'edicion-clasica-tolima',
             name: { es: 'Clásica', en: 'Classic' },
             fullName: { es: 'Edición Clásica — Tolima', en: 'Classic Edition — Tolima' },
-            price: 22900,
+            price: 54000,
             image: 'fotos productos/DSC07220.jpg',
             origin: { es: 'Planadas, Tolima', en: 'Planadas, Tolima' },
             altitude: '1.750 MSNM',
