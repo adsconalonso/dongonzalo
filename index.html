@@ -216,33 +216,48 @@
             </div>
         </div>
 
-        <div class="horizontal-scroll-section hide-scrollbar">
-            <div class="horizontal-scroll-item reveal reveal-delay-1">
-                <div class="aspect-[16/9] bg-white/5 p-12 flex flex-col justify-between group cursor-trigger">
-                    <span class="text-6xl font-serif opacity-10 group-hover:opacity-40 group-hover:text-theme-accent transition-all duration-700">01</span>
-                    <div>
-                        <h3 class="text-3xl font-serif mb-4 italic" data-i18n="proc-step1-name">Cosecha Selectiva</h3>
-                        <p class="text-sm font-light opacity-60 max-w-sm" data-i18n="proc-step1-desc">Solo las cerezas en su punto óptimo de madurez entran en nuestra selección.</p>
+        <div class="relative group/scroll">
+            <!-- Botones de Navegación Flotantes -->
+            <button id="prev-step" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center z-40 opacity-0 group-hover/scroll:opacity-100 transition-all duration-700 hover:bg-theme-accent hover:text-theme-text cursor-trigger pointer-events-none group-hover/scroll:pointer-events-auto shadow-2xl">
+                <i data-lucide="chevron-left" class="w-6 h-6"></i>
+            </button>
+            <button id="next-step" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center z-40 opacity-0 group-hover/scroll:opacity-100 transition-all duration-700 hover:bg-theme-accent hover:text-theme-text cursor-trigger pointer-events-none group-hover/scroll:pointer-events-auto shadow-2xl">
+                <i data-lucide="chevron-right" class="w-6 h-6"></i>
+            </button>
+
+            <div class="horizontal-scroll-section hide-scrollbar" id="proceso-scroll">
+                <div class="horizontal-scroll-item reveal reveal-delay-1">
+                    <div class="aspect-[16/9] bg-white/5 p-12 flex flex-col justify-between group cursor-trigger">
+                        <span class="text-6xl font-serif opacity-10 group-hover:opacity-40 group-hover:text-theme-accent transition-all duration-700">01</span>
+                        <div>
+                            <h3 class="text-3xl font-serif mb-4 italic" data-i18n="proc-step1-name">Cosecha Selectiva</h3>
+                            <p class="text-sm font-light opacity-60 max-w-sm" data-i18n="proc-step1-desc">Solo las cerezas en su punto óptimo de madurez entran en nuestra selección.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-scroll-item reveal reveal-delay-2">
+                    <div class="aspect-[16/9] bg-white/5 p-12 flex flex-col justify-between group cursor-trigger">
+                        <span class="text-6xl font-serif opacity-10 group-hover:opacity-40 group-hover:text-theme-accent transition-all duration-700">02</span>
+                        <div>
+                            <h3 class="text-3xl font-serif mb-4 italic" data-i18n="proc-step2-name">La Curva de Tueste</h3>
+                            <p class="text-sm font-light opacity-60 max-w-sm" data-i18n="proc-step2-desc">Perfiles personalizados que resaltan la acidez brillante y el cuerpo sedoso.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-scroll-item reveal reveal-delay-3">
+                    <div class="aspect-[16/9] bg-white/5 p-12 flex flex-col justify-between group cursor-trigger">
+                        <span class="text-6xl font-serif opacity-10 group-hover:opacity-40 group-hover:text-theme-accent transition-all duration-700">03</span>
+                        <div>
+                            <h3 class="text-3xl font-serif mb-4 italic" data-i18n="proc-step3-name">Catación Técnica</h3>
+                            <p class="text-sm font-light opacity-60 max-w-sm" data-i18n="proc-step3-desc">Cada lote es validado por nuestros maestros catadores antes del empaque.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="horizontal-scroll-item reveal reveal-delay-2">
-                <div class="aspect-[16/9] bg-white/5 p-12 flex flex-col justify-between group cursor-trigger">
-                    <span class="text-6xl font-serif opacity-10 group-hover:opacity-40 group-hover:text-theme-accent transition-all duration-700">02</span>
-                    <div>
-                        <h3 class="text-3xl font-serif mb-4 italic" data-i18n="proc-step2-name">La Curva de Tueste</h3>
-                        <p class="text-sm font-light opacity-60 max-w-sm" data-i18n="proc-step2-desc">Perfiles personalizados que resaltan la acidez brillante y el cuerpo sedoso.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="horizontal-scroll-item reveal reveal-delay-3">
-                <div class="aspect-[16/9] bg-white/5 p-12 flex flex-col justify-between group cursor-trigger">
-                    <span class="text-6xl font-serif opacity-10 group-hover:opacity-40 group-hover:text-theme-accent transition-all duration-700">03</span>
-                    <div>
-                        <h3 class="text-3xl font-serif mb-4 italic" data-i18n="proc-step3-name">Catación Técnica</h3>
-                        <p class="text-sm font-light opacity-60 max-w-sm" data-i18n="proc-step3-desc">Cada lote es validado por nuestros maestros catadores antes del empaque.</p>
-                    </div>
-                </div>
+
+            <!-- Indicador de Progreso -->
+            <div class="absolute -bottom-10 left-20 right-20 h-[1px] bg-white/10 overflow-hidden">
+                <div id="scroll-progress" class="absolute top-0 left-0 h-full bg-theme-accent w-0 transition-all duration-300"></div>
             </div>
         </div>
         

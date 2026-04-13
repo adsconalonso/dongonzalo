@@ -233,13 +233,22 @@ body.no-scroll {
     padding: 0 5vw;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    touch-action: pan-y; /* Permite scroll vertical fluido incluso tocando el carrusel */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 }
 
 .horizontal-scroll-section::-webkit-scrollbar { display: none; }
 
 .horizontal-scroll-item {
-    flex: 0 0 80vw;
+    flex: 0 0 85vw;
     scroll-snap-align: center;
+}
+
+@media (min-width: 768px) {
+    .horizontal-scroll-item {
+        flex: 0 0 45vw; /* Dos ítems visibles parcialmente en desktop */
+    }
 }
 
 /* 11. Custom Animations */

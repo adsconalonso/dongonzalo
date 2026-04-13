@@ -734,4 +734,51 @@ document.addEventListener('DOMContentLoaded', () => {
             updateLanguage(nextLang);
         }
     });
+
+    // 10. Horizontal Scroll Interaction (Sección Proceso)
+    const scrollContainer = document.getElementById('proceso-scroll');
+    const prevBtn = document.getElementById('prev-step');
+    const nextBtn = document.getElementById('next-step');
+    const progressBar = document.getElementById('scroll-progress');
+
+    if (scrollContainer) {
+        scrollContainer.addEventListener('scroll', () => {
+            const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+            if (maxScroll <= 0) return;
+            
+            const scrollPercentage = (scrollContainer.scrollLeft / maxScroll) * 100;
+            if (progressBar) progressBar.style.width = `${scrollPercentage}%`;
+
+            // Control de visibilidad de flechas con suavidad
+            if (prevBtn) {
+                if (scrollContainer.scrollLeft < 20) {
+                    prevBtn.style.opacity = '0';
+                    prevBtn.style.pointerEvents = 'none';
+                } else {
+                    prevBtn.style.opacity = '1';
+                    prevBtn.style.pointerEvents = 'auto';
+                }
+            }
+            if (nextBtn) {
+                if (scrollContainer.scrollLeft + scrollContainer.clientWidth > scrollContainer.scrollWidth - 20) {
+                    nextBtn.style.opacity = '0';
+                    nextBtn.style.pointerEvents = 'none';
+                } else {
+                    nextBtn.style.opacity = '1';
+                    nextBtn.style.pointerEvents = 'auto';
+                }
+            }
+        });
+
+        // Click en flechas
+        prevBtn?.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: -scrollContainer.clientWidth * 0.8, behavior: 'smooth' });
+        });
+        nextBtn?.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: scrollContainer.clientWidth * 0.8, behavior: 'smooth' });
+        });
+
+        // Inicializar estado de las flechas
+        scrollContainer.dispatchEvent(new Event('scroll'));
+    }
 });
