@@ -40,7 +40,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Estilos Globales -->
-    <link rel="stylesheet" href="base.css?v=1.0.4">
+    <link rel="stylesheet" href="base.css?v=1.0.5">
 </head>
 
 <body class="bg-theme-bg text-theme-text font-sans font-light selection:bg-theme-accent selection:text-white min-h-screen overflow-x-hidden">
@@ -144,14 +144,16 @@
                                 data-product-image="fotos productos/DSC07203.jpg">
                                 Añadir a la mochila
                             </button>
-                            <a href="producto.html" class="uppercase tracking-[0.3em] text-[10px] font-bold border-b border-theme-text/20 pb-2 w-max hover:border-theme-accent transition-colors cursor-trigger" data-i18n="coll-view-details">Ver Detalles</a>
+                            <a href="producto.html?id=edicion-selecta" class="uppercase tracking-[0.3em] text-[10px] font-bold border-b border-theme-text/20 pb-2 w-max hover:border-theme-accent transition-colors cursor-trigger" data-i18n="coll-view-details">Ver Detalles</a>
                         </div>
                     </div>
 
                     <!-- Producto 2: Edición Gourmet -->
                     <div class="flex flex-col group reveal reveal-delay-1">
                         <div class="aspect-[3/4] bg-theme-text text-theme-bg mb-8 overflow-hidden js-tilt shadow-2xl cursor-trigger">
-                            <img src="fotos productos/DSC07212.jpg" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                            <a href="producto.html?id=edicion-gourmet" class="block w-full h-full">
+                                <img src="fotos productos/DSC07212.jpg" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                            </a>
                         </div>
                         <div class="flex justify-between items-start">
                             <div>
@@ -168,14 +170,16 @@
                                 data-product-image="fotos productos/DSC07212.jpg">
                                 Añadir a la mochila
                             </button>
-                            <a href="producto.html" class="uppercase tracking-[0.3em] text-[10px] font-bold border-b border-theme-text/20 pb-2 w-max hover:border-theme-accent transition-colors cursor-trigger" data-i18n="coll-view-details">Ver Detalles</a>
+                            <a href="producto.html?id=edicion-gourmet" class="uppercase tracking-[0.3em] text-[10px] font-bold border-b border-theme-text/20 pb-2 w-max hover:border-theme-accent transition-colors cursor-trigger" data-i18n="coll-view-details">Ver Detalles</a>
                         </div>
                     </div>
 
                     <!-- Producto 3: Edición Clásica -->
                     <div class="flex flex-col group reveal reveal-delay-2">
                         <div class="aspect-[3/4] bg-theme-surface mb-8 overflow-hidden js-tilt shadow-lg cursor-trigger">
-                            <img src="fotos productos/DSC07220.jpg" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                            <a href="producto.html?id=edicion-clasica" class="block w-full h-full">
+                                <img src="fotos productos/DSC07220.jpg" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                            </a>
                         </div>
                         <div class="flex justify-between items-start">
                             <div>
@@ -192,7 +196,7 @@
                                 data-product-image="fotos productos/DSC07220.jpg">
                                 Añadir a la mochila
                             </button>
-                            <a href="producto.html" class="uppercase tracking-[0.3em] text-[10px] font-bold border-b border-theme-text/20 pb-2 w-max hover:border-theme-accent transition-colors cursor-trigger" data-i18n="coll-view-details">Ver Detalles</a>
+                            <a href="producto.html?id=edicion-clasica" class="uppercase tracking-[0.3em] text-[10px] font-bold border-b border-theme-text/20 pb-2 w-max hover:border-theme-accent transition-colors cursor-trigger" data-i18n="coll-view-details">Ver Detalles</a>
                         </div>
                     </div>
 
@@ -254,7 +258,7 @@
     <!-- Cart Drawer Holder -->
     <div id="cart-drawer-holder"></div>
 
-    <script src="main.js?v=1.0.4"></script>
+    <script src="main.js?v=1.0.5"></script>
 </body>
 
 </html>

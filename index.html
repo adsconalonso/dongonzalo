@@ -41,7 +41,7 @@
     <!-- Iconos de Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Estilos Globales -->
-    <link rel="stylesheet" href="base.css?v=1.0.4">
+    <link rel="stylesheet" href="base.css?v=1.0.5">
 
     <style>
         /* Estilos específicos del Home que no son comunes */
@@ -283,35 +283,51 @@
                     </div>
                 </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-4">
-                    <div class="space-y-4 md:pt-20">
-                        <div class="aspect-[3/4] bg-theme-bg p-8 js-tilt reveal reveal-delay-1 cursor-trigger shadow-lg relative overflow-hidden group">
-                            <img src="fotos productos/DSC07203.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-40 z-0">
-                            <div class="js-tilt-inner h-full flex flex-col justify-between relative z-10">
-                                <div class="w-full h-1/2 bg-theme-text/5 rounded-full blur-3xl absolute -z-10"></div>
-                                <div class="text-center">
-                                    <span class="text-[10px] uppercase tracking-widest font-bold opacity-30 text-theme-text">Origen — Antioquia</span>
-                                    <h3 class="font-serif italic text-2xl mt-2">Edición Selecta</h3>
-                                </div>
-                                <div class="flex justify-between items-end">
-                                    <span class="text-sm font-bold">$24.900</span>
-                                    <button class="cart-trigger hover:text-theme-accent transition-colors" data-product-id="edicion-selecta-antioquia" data-product-name="Edición Selecta — Antioquia" data-product-price="24900" data-product-image="fotos productos/DSC07203.jpg"><i data-lucide="plus" class="w-5 h-5"></i></button>
-                                </div>
+                <div class="grid grid-cols-2 gap-x-6 gap-y-20 md:gap-x-12">
+                    <!-- Producto 1: Selecta -->
+                    <div class="reveal reveal-delay-1 flex flex-col group/card">
+                        <a href="producto.html?id=edicion-selecta" class="block aspect-[3/4] overflow-hidden bg-theme-surface shadow-xl relative cursor-trigger">
+                            <img src="fotos productos/DSC07203.jpg" class="w-full h-full object-cover transition-transform duration-1000 group-hover/card:scale-105">
+                            <div class="absolute inset-0 bg-theme-text/0 group-hover/card:bg-theme-text/5 transition-all duration-700"></div>
+                        </a>
+                        <div class="mt-8 flex flex-col">
+                            <span class="text-[9px] uppercase tracking-[0.2em] font-bold text-theme-accent mb-2" data-i18n="coll-prod1-tag">Origen — Antioquia</span>
+                            <h3 class="font-serif italic text-2xl mb-3" data-i18n="coll-prod1-title">Edición Selecta</h3>
+                            <span class="text-sm font-bold opacity-40 mb-6">$24.900</span>
+                            
+                            <div class="flex flex-col sm:flex-row gap-4 sm:items-center">
+                                <a href="producto.html?id=edicion-selecta" class="text-[10px] uppercase tracking-widest font-bold border-b border-theme-text pb-1 hover:text-theme-accent hover:border-theme-accent transition-all w-fit cursor-trigger" data-i18n="coll-view-details">Ver Detalles</a>
+                                <button class="cart-trigger text-[10px] uppercase tracking-widest font-bold text-theme-accent hover:opacity-60 transition-opacity w-fit cursor-trigger" 
+                                    data-product-id="edicion-selecta-antioquia" 
+                                    data-product-name="Edición Selecta — Antioquia" 
+                                    data-product-price="24900" 
+                                    data-product-image="fotos productos/DSC07203.jpg">
+                                    Añadir +
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="space-y-4">
-                        <div class="aspect-[3/4] bg-theme-text text-theme-bg p-8 js-tilt reveal reveal-delay-2 cursor-trigger shadow-2xl relative overflow-hidden group">
-                            <img src="fotos productos/DSC07212.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-40 z-0">
-                            <div class="js-tilt-inner h-full flex flex-col justify-between relative z-10">
-                                <div class="text-center">
-                                    <span class="text-[10px] uppercase tracking-widest font-bold text-theme-accent">Origen — Nariño</span>
-                                    <h3 class="font-serif italic text-2xl mt-2 text-white">Edición Gourmet</h3>
-                                </div>
-                                <div class="flex justify-between items-end">
-                                    <span class="text-sm font-bold text-white">$26.900</span>
-                                    <button class="cart-trigger hover:text-theme-accent transition-colors z-20" data-product-id="edicion-gourmet-narino" data-product-name="Edición Gourmet — Nariño" data-product-price="26900" data-product-image="fotos productos/DSC07212.jpg"><i data-lucide="shopping-bag" class="w-5 h-5 text-theme-accent"></i></button>
-                                </div>
+
+                    <!-- Producto 2: Gourmet -->
+                    <div class="reveal reveal-delay-2 flex flex-col group/card pt-16 md:pt-32">
+                        <a href="producto.html?id=edicion-gourmet" class="block aspect-[3/4] overflow-hidden bg-theme-surface shadow-xl relative cursor-trigger">
+                            <img src="fotos productos/DSC07212.jpg" class="w-full h-full object-cover transition-transform duration-1000 group-hover/card:scale-105">
+                            <div class="absolute inset-0 bg-theme-text/0 group-hover/card:bg-theme-text/5 transition-all duration-700"></div>
+                        </a>
+                        <div class="mt-8 flex flex-col">
+                            <span class="text-[9px] uppercase tracking-[0.2em] font-bold text-theme-accent mb-2" data-i18n="coll-prod2-tag">Origen — Nariño</span>
+                            <h3 class="font-serif italic text-2xl mb-3" data-i18n="coll-prod2-title">Edición Gourmet</h3>
+                            <span class="text-sm font-bold opacity-40 mb-6">$26.900</span>
+                            
+                            <div class="flex flex-col sm:flex-row gap-4 sm:items-center">
+                                <a href="producto.html?id=edicion-gourmet" class="text-[10px] uppercase tracking-widest font-bold border-b border-theme-text pb-1 hover:text-theme-accent hover:border-theme-accent transition-all w-fit cursor-trigger" data-i18n="coll-view-details">Ver Detalles</a>
+                                <button class="cart-trigger text-[10px] uppercase tracking-widest font-bold text-theme-accent hover:opacity-60 transition-opacity w-fit cursor-trigger" 
+                                    data-product-id="edicion-gourmet-narino" 
+                                    data-product-name="Edición Gourmet — Nariño" 
+                                    data-product-price="26900" 
+                                    data-product-image="fotos productos/DSC07212.jpg">
+                                    Añadir +
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -390,7 +406,7 @@
     <!-- Cart Drawer Holder -->
     <div id="cart-drawer-holder"></div>
 
-    <script src="main.js?v=1.0.4"></script>
+    <script src="main.js?v=1.0.5"></script>
 </body>
 
 </html>

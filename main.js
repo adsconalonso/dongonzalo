@@ -253,6 +253,121 @@ document.addEventListener('DOMContentLoaded', () => {
         lucide.createIcons();
     }
 
+    // --- LÓGICA DE PRODUCTOS DINÁMICOS ---
+    const productData = {
+        'edicion-selecta': {
+            id: 'edicion-selecta-antioquia',
+            name: { es: 'Selecta', en: 'Select' },
+            fullName: { es: 'Edición Selecta — Antioquia', en: 'Select Edition — Antioquia' },
+            price: 24900,
+            image: 'fotos productos/DSC07203.jpg',
+            origin: { es: 'Urrao, Antioquia', en: 'Urrao, Antioquia' },
+            altitude: '1.950 MSNM',
+            variety: 'Caturra Chiroso',
+            score: '88 pts',
+            notes: { es: 'Chocolate, Durazno, Cítrico', en: 'Chocolate, Peach, Citrus' },
+            desc: { 
+                es: 'Un perfil sensorial brillante diseñado para despertar los sentidos. Recuenta la frescura del rocío matutino en las montañas de Antioquia.',
+                en: 'A bright sensory profile designed to awaken the senses. It recounts the freshness of the morning dew in the mountains of Antioquia.'
+            }
+        },
+        'edicion-gourmet': {
+            id: 'edicion-gourmet-narino',
+            name: { es: 'Gourmet', en: 'Gourmet' },
+            fullName: { es: 'Edición Gourmet — Nariño', en: 'Gourmet Edition — Nariño' },
+            price: 26900,
+            image: 'fotos productos/DSC07212.jpg',
+            origin: { es: 'Sandoná, Nariño', en: 'Sandoná, Nariño' },
+            altitude: '2.100 MSNM',
+            variety: 'Castillo / Colombia',
+            score: '87.5 pts',
+            notes: { es: 'Caramelo, Cacao, Frutal', en: 'Caramel, Cocoa, Fruity' },
+            desc: { 
+                es: 'Intensidad y elegancia en equilibrio. Un café con cuerpo sedoso y un postgusto prolongado que evoca las tierras volcánicas del sur.',
+                en: 'Intensity and elegance in balance. A coffee with a silky body and a long aftertaste that evokes the volcanic lands of the south.'
+            }
+        },
+        'edicion-clasica': {
+            id: 'edicion-clasica-tolima',
+            name: { es: 'Clásica', en: 'Classic' },
+            fullName: { es: 'Edición Clásica — Tolima', en: 'Classic Edition — Tolima' },
+            price: 22900,
+            image: 'fotos productos/DSC07220.jpg',
+            origin: { es: 'Planadas, Tolima', en: 'Planadas, Tolima' },
+            altitude: '1.750 MSNM',
+            variety: 'Caturra / Colombia',
+            score: '84 pts',
+            notes: { es: 'Panela, Limón, Chocolate', en: 'Brown Sugar, Lemon, Chocolate' },
+            desc: { 
+                es: 'El sabor de la tradición. Un café balanceado y reconfortante, ideal para quienes buscan la esencia pura del café colombiano.',
+                en: 'The taste of tradition. A balanced and comforting coffee, ideal for those seeking the pure essence of Colombian coffee.'
+            }
+        }
+    };
+
+    function loadDynamicProduct() {
+        if (!window.location.pathname.includes('producto.html')) return;
+        
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('id') || 'edicion-selecta';
+        const product = productData[productId];
+        
+        if (!product) return;
+
+        // Actualizar UI
+        document.title = `${product.name[currentLang]} — Don Gonzalo`;
+        
+        const mainImage = document.querySelector('.parallax-img');
+        if (mainImage) mainImage.src = product.image;
+
+        const priceEl = document.querySelector('.text-4xl.font-serif.text-theme-text\\/40');
+        if (priceEl) priceEl.textContent = `$${product.price.toLocaleString()}`;
+
+        const nameEl = document.querySelector('h1.text-6xl');
+        if (nameEl) nameEl.textContent = `${product.name[currentLang]}.`;
+
+        const descEl = document.querySelector('[data-i18n="prod-desc"]');
+        if (descEl) descEl.textContent = product.desc[currentLang];
+
+        const notesEl = document.querySelector('[data-i18n="prod-notes"]');
+        if (notesEl) notesEl.textContent = `Notas: ${product.notes[currentLang]}`;
+
+        const editionEl = document.querySelector('[data-i18n="prod-edition"]');
+        if (editionEl) editionEl.textContent = product.fullName[currentLang].split(' — ')[0];
+
+        // Ficha técnica
+        const regionEl = document.querySelector('[data-i18n="prod-spec-region"]');
+        if (regionEl) regionEl.textContent = product.origin[currentLang];
+
+        const altEl = document.querySelector('[data-i18n="prod-spec-alt"]');
+        if (altEl) altEl.textContent = product.altitude;
+
+        const varEl = document.querySelector('[data-i18n="prod-spec-var"]');
+        if (varEl) varEl.textContent = product.variety;
+
+        const scoreEl = document.querySelector('[data-i18n="prod-spec-score"]');
+        if (scoreEl) scoreEl.textContent = product.score;
+
+        // Botón de compra
+        const buyBtn = document.querySelector('.cart-trigger[data-product-id]');
+        if (buyBtn) {
+            buyBtn.dataset.productId = product.id;
+            buyBtn.dataset.productName = product.fullName[currentLang];
+            buyBtn.dataset.productPrice = product.price;
+            buyBtn.dataset.productImage = product.image;
+        }
+    }
+
+    // Call dynamic loader
+    loadDynamicProduct();
+
+    // Actualizar el loader cuando cambie el idioma
+    const originalUpdateLanguage = updateLanguage;
+    updateLanguage = function(lang) {
+        originalUpdateLanguage(lang);
+        loadDynamicProduct();
+    };
+
     // Escuchar botones de "Añadir al carrito"
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('.cart-trigger');
