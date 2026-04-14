@@ -217,14 +217,16 @@ function renderCart() {
             const total = getCartTotal();
 
             document.getElementById('cart-subtotal').textContent = `$${subtotal.toLocaleString()}`;
-            document.getElementById('cart-shipping').textContent = shipping === 0 ? (subtotal > 0 ? 'Gratis' : '$0') : `$${shipping.toLocaleString()}`;
+            const labelFree = translations[currentLang]?.['cart-free'] || 'Gratis';
+            const labelMissing = translations[currentLang]?.['cart-missing'] || '¡Faltan $X para envío GRATIS!';
+            document.getElementById('cart-shipping').textContent = shipping === 0 ? (subtotal > 0 ? labelFree : '$0') : `$${shipping.toLocaleString()}`;
             totalElement.textContent = `$${total.toLocaleString()}`;
 
             const teaser = document.getElementById('free-shipping-teaser');
             if (teaser) {
                 if (subtotal > 0 && subtotal < FREE_SHIPPING_THRESHOLD) {
                     const missing = FREE_SHIPPING_THRESHOLD - subtotal;
-                    teaser.textContent = `¡Faltan $${missing.toLocaleString()} para envío GRATIS!`;
+                    teaser.textContent = labelMissing.replace('$X', `$${missing.toLocaleString()}`);
                     teaser.classList.remove('hidden');
                 } else {
                     teaser.classList.add('hidden');
@@ -634,6 +636,17 @@ document.addEventListener('DOMContentLoaded', () => {
             "proc-step6-h2": "Excelencia <br><span class='italic font-light text-theme-text/40'>en Taza.</span>",
             "proc-step6-p": "Probamos cada lote para asegurar la excelencia sensorial. Sellamos en origen para que la mística del campo llegue intacta a tu hogar.",
             "proc-btn": "Explorar nuestro método",
+            "proc-desc": "Un ciclo perfecto de temperatura y tiempo diseñado para liberar el perfil oculto de cada región.",
+            "proc-num": "02 — Método",
+            "proc-step1-name": "Cosecha Selectiva",
+            "proc-step1-desc": "Solo las cerezas en su punto óptimo de madurez entran en nuestra selección.",
+            "proc-step2-name": "La Curva de Tueste",
+            "proc-step2-desc": "Perfiles personalizados que resaltan la acidez brillante y el cuerpo sedoso.",
+            "proc-step3-name": "Catación Técnica",
+            "proc-step3-desc": "Cada lote es validado por nuestros maestros catadores antes del empaque.",
+            "proc-title": "Artesanía de <br><span class='italic font-light opacity-40'>Precisión</span>",
+            "phi-impact-cap": "Impacto",
+            "hero-home": "BIENVENIDO",
             "coll-hero": "NUESTROS CAFÉS",
             "coll-hero-tag": "Ediciones limitadas de origen único.",
             "coll-filter-title": "Variedad",
@@ -662,6 +675,9 @@ document.addEventListener('DOMContentLoaded', () => {
             "cart-empty": "Tu mochila está vacía",
             "cart-explore": "Explorar Tienda",
             "cart-close": "Cerrar",
+            "cart-free": "Gratis",
+            "cart-missing": "¡Faltan $X para envío GRATIS!",
+            "prod-added": "Agregado a la mochila",
             "footer-talk": "¿Hablamos de <br /><span class='italic text-theme-accent'>Café?</span>",
             "footer-join": "Únete a la Rebelión",
             "footer-connect": "Conecta",
@@ -728,6 +744,17 @@ document.addEventListener('DOMContentLoaded', () => {
             "proc-step6-h2": "Excellence <br><span class='italic font-light text-theme-text/40'>in Cup.</span>",
             "proc-step6-p": "We test each batch to ensure sensory excellence. We seal at the source so that the mystique of the countryside reaches your home intact.",
             "proc-btn": "Explore our method",
+            "proc-desc": "A perfect cycle of temperature and time designed to release the hidden profile of each region.",
+            "proc-num": "02 — Method",
+            "proc-step1-name": "Selective Harvest",
+            "proc-step1-desc": "Only the cherries at their optimal point of maturity enter our selection.",
+            "proc-step2-name": "The Roasting Curve",
+            "proc-step2-desc": "Custom profiles that highlight the bright acidity and silky body.",
+            "proc-step3-name": "Technical Cupping",
+            "proc-step3-desc": "Each batch is validated by our master cuppers before packaging.",
+            "proc-title": "Precision <br><span class='italic font-light opacity-40'>Craftsmanship</span>",
+            "phi-impact-cap": "Impact",
+            "hero-home": "WELCOME",
             "coll-num": "03 — Catalog",
             "coll-title": "LIMITED <br><span class='italic font-light text-theme-text/40'>EDITIONS.</span>",
             "coll-text": "Our varieties come from selected micro-lots for their unique origin. We only bring the excellence of each harvest at its peak moment.",
@@ -772,6 +799,9 @@ document.addEventListener('DOMContentLoaded', () => {
             "cart-empty": "Your backpack is empty",
             "cart-explore": "Explore Shop",
             "cart-close": "Close",
+            "cart-free": "Free",
+            "cart-missing": "$X away from FREE shipping!",
+            "prod-added": "Added to backpack",
             "footer-talk": "Let's Talk <br /><span class='italic text-theme-accent'>Coffee?</span>",
             "footer-join": "Join the Rebellion",
             "footer-connect": "Connect",
