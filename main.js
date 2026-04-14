@@ -784,13 +784,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 10. Horizontal Scroll Interaction (Sección Proceso)
-    const scrollContainer = document.getElementById('proceso-scroll');
-    const prevBtn = document.getElementById('prev-step');
-    const nextBtn = document.getElementById('next-step');
-    const progressBar = document.getElementById('scroll-progress');
+    // 10. Horizontal Scroll Interaction System
+    function setupHorizontalScroll(containerId, prevId, nextId, progressId) {
+        const scrollContainer = document.getElementById(containerId);
+        const prevBtn = document.getElementById(prevId);
+        const nextBtn = document.getElementById(nextId);
+        const progressBar = document.getElementById(progressId);
 
-    if (scrollContainer) {
+        if (!scrollContainer) return;
+
         scrollContainer.addEventListener('scroll', () => {
             const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
             if (maxScroll <= 0) return;
@@ -798,7 +800,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const scrollPercentage = (scrollContainer.scrollLeft / maxScroll) * 100;
             if (progressBar) progressBar.style.width = `${scrollPercentage}%`;
 
-            // Control de visibilidad de flechas con suavidad
             if (prevBtn) {
                 if (scrollContainer.scrollLeft < 20) {
                     prevBtn.style.opacity = '0';
@@ -819,7 +820,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Click en flechas
         prevBtn?.addEventListener('click', () => {
             scrollContainer.scrollBy({ left: -scrollContainer.clientWidth * 0.8, behavior: 'smooth' });
         });
@@ -827,9 +827,35 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollContainer.scrollBy({ left: scrollContainer.clientWidth * 0.8, behavior: 'smooth' });
         });
 
-        // Inicializar estado de las flechas
+        // Wheel Bypass Refinado: Permite salir del scroll horizontal suavemente
+        scrollContainer.addEventListener('wheel', (e) => {
+            // Ignorar si el scroll es principalmente horizontal (trackpads)
+            if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+
+            const scrollLeft = scrollContainer.scrollLeft;
+            const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+            const tolerance = 5; // Píxeles de margen para evitar errores de redondeo
+
+            const isAtStart = scrollLeft <= tolerance;
+            const isAtEnd = scrollLeft >= maxScroll - tolerance;
+
+            // CASO 1: Scrollear hacia arriba estando al inicio -> Dejar que scrollee la página
+            if (e.deltaY < 0 && isAtStart) return;
+
+            // CASO 2: Scrollear hacia abajo estando al final -> Dejar que scrollee la página
+            if (e.deltaY > 0 && isAtEnd) return;
+
+            // CASO 3: Estamos en medio -> Scrolleo horizontal y bloqueamos el vertical de la página
+            scrollContainer.scrollLeft += e.deltaY;
+            e.preventDefault();
+        }, { passive: false });
+
         scrollContainer.dispatchEvent(new Event('scroll'));
     }
+
+    // Inicializar galerías
+    setupHorizontalScroll('proceso-scroll', 'prev-step', 'next-step', 'scroll-progress');
+    setupHorizontalScroll('casa-scroll', 'prev-casa', 'next-casa', null);
 
     // --- LÓGICA DE PRODUCTOS DINÁMICOS ---
     const productData = {
