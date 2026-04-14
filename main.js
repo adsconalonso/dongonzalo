@@ -177,6 +177,14 @@ function renderCart() {
     if (cart.length === 0) {
         emptyState?.classList.remove('hidden');
         fullState?.classList.add('hidden');
+        
+        if (totalElement) {
+            document.getElementById('cart-subtotal').textContent = '$0';
+            document.getElementById('cart-shipping').textContent = '$0';
+            totalElement.textContent = '$0';
+            const teaser = document.getElementById('free-shipping-teaser');
+            if (teaser) teaser.classList.add('hidden');
+        }
     } else {
         emptyState?.classList.add('hidden');
         fullState?.classList.remove('hidden');
@@ -187,7 +195,7 @@ function renderCart() {
                     <img src="${item.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
                 <div class="flex-1">
-                    <h4 class="font-serif italic text-lg leading-tight">${item.name}</h4>
+                    <h4 class="font-serif italic text-lg leading-tight">${item.name} <span class="text-xs sans-serif not-italic opacity-60">(${item.grind || 'Grano'})</span></h4>
                     <div class="flex justify-between items-center mt-4">
                         <div class="flex items-center gap-4 border border-theme-text/10 px-3 py-1">
                             <button onclick="updateQuantity('${item.id}', -1)" class="text-xs hover:text-theme-accent transition-colors">-</button>
@@ -302,15 +310,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Escuchar botones de "Añadir al carrito"
 
-    // Escuchar botones de "Añadir al carrito"
     document.addEventListener('click', (e) => {
+        // Handle Grind Selection UI
+        const grindBtn = e.target.closest('.grind-btn');
+        if (grindBtn) {
+            const container = grindBtn.closest('div');
+            container.querySelectorAll('.grind-btn').forEach(b => {
+                b.classList.remove('active', 'bg-theme-accent/5', 'border-theme-accent', 'text-theme-accent');
+                b.classList.add('border-theme-text/20');
+            });
+            grindBtn.classList.add('active', 'bg-theme-accent/5', 'border-theme-accent', 'text-theme-accent');
+            grindBtn.classList.remove('border-theme-text/20');
+        }
+
         const btn = e.target.closest('.cart-trigger');
         if (btn) {
+            // Find nearby grind selection, otherwise default to 'Grano'
+            const container = btn.closest('.flex-col') || btn.closest('.grid');
+            let selectedGrind = 'Grano';
+            if (container) {
+                const activeGrindBtn = container.querySelector('.grind-btn.active');
+                if (activeGrindBtn) selectedGrind = activeGrindBtn.dataset.grind;
+            }
+
+            const baseId = btn.dataset.productId || 'edicion-selecta-antioquia';
             const product = {
-                id: btn.dataset.productId || 'edicion-selecta-antioquia',
+                id: `${baseId}-${selectedGrind.toLowerCase().replace(/[^a-z0-9]/g, '')}`,
+                baseId: baseId,
                 name: btn.dataset.productName || 'Edición Selecta — Antioquia',
                 price: parseInt(btn.dataset.productPrice) || 24900,
-                image: btn.dataset.productImage || 'fotos productos/DSC07203.jpg'
+                image: btn.dataset.productImage || 'fotos productos/DSC07203.jpg',
+                grind: selectedGrind
             };
             addToCart(product);
         }

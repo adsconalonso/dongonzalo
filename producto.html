@@ -40,7 +40,10 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Estilos Globales -->
-    <link rel="stylesheet" href="base.css?v=1.1.3">
+    <link rel="stylesheet" href="base.css?v=1.1.4">
+    <meta name="description" content="Detalles del café de origen único Don Gonzalo. Selecciona tu perfil y molienda ideal y recibe en casa el verdadero café colombiano.">
+    <meta name="keywords" content="comprar café en grano, café molido V60, perfil sensorial café, caturra chiroso, café altura Colombia">
+    <meta name="author" content="Don Gonzalo Café">
 </head>
 
 <body class="bg-theme-bg text-theme-text font-sans font-light selection:bg-theme-accent selection:text-white min-h-screen overflow-x-hidden">
@@ -125,9 +128,9 @@
                 <div class="flex flex-col gap-8">
                     <div>
                         <span class="uppercase tracking-widest text-[10px] font-bold opacity-40 mb-3 block" data-i18n="prod-grind">Molienda</span>
-                        <div class="flex gap-4">
-                            <button class="px-6 py-2 border border-theme-accent text-theme-accent uppercase text-[10px] font-bold cursor-trigger bg-theme-accent/5" data-i18n="prod-grind-grain">Grano</button>
-                            <button class="px-6 py-2 border border-theme-text/20 uppercase text-[10px] font-bold hover:border-theme-accent hover:text-theme-accent transition-all cursor-trigger" data-i18n="prod-grind-v60">Media (V60)</button>
+                        <div class="flex gap-4" id="grind-selector">
+                            <button class="grind-btn active px-6 py-2 border border-theme-accent text-theme-accent uppercase text-[10px] font-bold cursor-trigger bg-theme-accent/5" data-grind="Grano" data-i18n="prod-grind-grain">Grano</button>
+                            <button class="grind-btn px-6 py-2 border border-theme-text/20 uppercase text-[10px] font-bold hover:border-theme-accent hover:text-theme-accent transition-all cursor-trigger" data-grind="Media (V60)" data-i18n="prod-grind-v60">Media (V60)</button>
                         </div>
                     </div>
 
@@ -251,7 +254,7 @@
     <!-- Cart Drawer Holder -->
     <div id="cart-drawer-holder"></div>
 
-    <script src="main.js?v=1.1.3"></script>
+    <script src="main.js?v=1.1.4"></script>
 </body>
 
 </html>
