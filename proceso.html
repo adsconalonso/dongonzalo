@@ -40,7 +40,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Estilos Globales -->
-    <link rel="stylesheet" href="base.css?v=1.1.0">
+    <link rel="stylesheet" href="base.css?v=1.1.1">
 </head>
 
 <body class="bg-theme-bg text-theme-text font-sans font-light selection:bg-theme-accent selection:text-white min-h-screen overflow-x-hidden">
@@ -103,7 +103,9 @@
 
     <section class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-theme-bg">
         <div class="absolute inset-0 w-full h-full js-parallax" data-speed="0.15">
-            <source src="vid-home/tostion.mp4" type="video/mp4" />
+            <video autoplay muted loop playsinline class="w-full h-full object-cover brightness-50">
+                <source src="vid-home/tostion.mp4" type="video/mp4">
+            </video>
             <img src="fotos secciones/recolector_proceso.jpg" class="w-full h-full object-cover brightness-50">
         </div>
         <div class="hero-mask-container">
@@ -261,7 +263,7 @@
     <!-- Cart Drawer Holder -->
     <div id="cart-drawer-holder"></div>
 
-    <script src="main.js?v=1.1.0"></script>
+    <script src="main.js?v=1.1.1"></script>
 </body>
 
 </html>
